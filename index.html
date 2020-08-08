@@ -14,17 +14,33 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="./js/app.js"></script>
   </head>
-  <body ng-cloak ng-init="getFishData()">
+  <body ng-cloak ng-init="getCritterData()">
     <div class="container">
       <div class="text-center py-4">
-        <div class="h5">Animal Crossing: New Horizons</div>
-        <div class="h3">Critterpedia Cheat Sheet</div>
+        <div class="h6">Animal Crossing: New Horizons</div>
+        <div class="h4">Critterpedia Price Sheet</div>
       </div>
 
       <div class="form-row py-4">
         <div class="col-12 col-md-6 mb-2">
           <input type="search" class="form-control" ng-model="searchtext" placeholder="Find a Critter..." />
         </div>
+        <!-- <div class="col-12 col-md-6">
+          <div class="d-flex justify-content-start align-items-center h-100">
+            <div class="pl-3">
+              <input ng-model="searchtype" value="filter" id="searchtype_filter" name="searchtype" class="checkbox-custom" type="radio" />
+              <label for="searchtype_filter" class="checkbox-custom-label">
+                Filter
+              </label>
+            </div>
+            <div class="pl-3">
+              <input ng-model="searchtype" value="highlight" id="searchtype_highlight" name="searchtype" class="checkbox-custom" type="radio" />
+              <label for="searchtype_highlight" class="checkbox-custom-label">
+                Highlight
+              </label>
+            </div>
+          </div>
+        </div> -->
         <!-- <div class="col-12 col-md-6 mb-2">
           <select name="crittertype" id="crittertype" ng-model="crittertype" class="form-control">
             <option value="fish">Fish</option>
@@ -56,37 +72,26 @@
                   </span>
                 </a>
               </th>
-              <th>
-                <a href="#" ng-click="orderByField='shadow'; reverseSort = !reverseSort">
-                  Shadow
-                  <span ng-show="orderByField == 'shadow'">
-                    <span ng-show="!reverseSort"><i class="fas fa-sort-up"></i></span>
-                    <span ng-show="reverseSort"><i class="fas fa-sort-down"></i></span>
-                  </span>
-                </a>
-              </th>
-              <th>Availability</th>
+              <!-- <th>Availability</th> -->
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="critter in acnhdata | orderBy:orderByField:reverseSort | filter:searchtext">
+            <tr ng-repeat="critter in critters | orderBy:orderByField:reverseSort | filter:{ displayname: searchtext }">
               <td class="align-middle">
                 <div class="d-flex justify-content-start align-items-center">
-                  <img ng-src="{{critter.icon_uri}}" class="img-fluid" style="height: 40px;" alt="" />
+                  <img ng-src="{{critter.icon_uri}}" class="img-fluid" style="height: 50px;" alt="" />
                   <div class="ml-2">
                     <div class="text-capitalize">{{ critter.displayname }}</div>
                     <div class="small">{{ critter.availability.rarity }}</div>
-                    <!-- <div class="small">{{ critter['catch-phrase'] }}</div> -->
                   </div>
                 </div>
               </td>
               <td class="align-middle">{{ critter.price | currency:'':0 }}</td>
-              <td class="align-middle text-nowrap">{{ critter.shadow }}</td>
-              <td class="align-middle">
+              <!-- <td class="align-middle">
                 <div>{{ critter.availability.location }}</div>
                 <div class="small" ng-if="critter.availability.time">{{ critter.availability.time }}</div>
                 <div class="small" ng-if="!critter.availability.time">Any time</div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>

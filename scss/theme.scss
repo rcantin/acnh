@@ -1,15 +1,9 @@
 // @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 @import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,700&display=swap");
 
-// body {
-//   padding-top: 86px;
-// }
-
-$grid-gutter-width: 80px;
-
 $font-size-base: 1rem;
 $font-family-sans-serif: "Quicksand", Arial, sans-serif;
-$headings-font-weight: 300;
+// $headings-font-weight: 300;
 
 $label-margin-bottom: 0.25rem;
 
@@ -35,24 +29,6 @@ $danger: #cc3333;
 $dark: #333333;
 $light: #efefef;
 $white: #ffffff;
-
-$navbar-dark-color: rgba($white, 0.8);
-$navbar-dark-hover-color: rgba($white, 0.6);
-$navbar-dark-active-color: $white;
-$navbar-dark-toggler-border-color: transparent;
-
-.blink_fade {
-  animation: blinker 0.8s linear infinite;
-}
-
-@keyframes blinker {
-  10% {
-    opacity: 0;
-  }
-  40% {
-    opacity: 50;
-  }
-}
 
 // import all bootstrap variables (values from above will overwrite defaults)
 @import "../node_modules/bootstrap/scss/functions";
