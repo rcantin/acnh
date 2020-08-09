@@ -50,9 +50,16 @@ myApp.service("dataService", function($http) {
 myApp.controller("MainCtrl", function($scope, dataService, serviceLocalStorage) {
   $scope.today = new Date();
 
+  $scope.init = function() {
+    if (!serviceLocalStorage.get("acnhcritters_fish") || !serviceLocalStorage.get("acnhcritters_sea") || !serviceLocalStorage.get("acnhcritters_bugs")) {
+      console.log("Getting Critters from server API");
+      $scope.getCritterData();
+    }
+    $scope.setCritterData();
+  };
+
   $scope.getCritterData = function() {
     var dataset = new Array();
-
     dataService.getFishData(function(fishdata) {
       var fish = fishdata.data;
       for (key in fish) {
@@ -66,8 +73,8 @@ myApp.controller("MainCtrl", function($scope, dataService, serviceLocalStorage) 
         fish[key]["displayname"] = setname;
         dataset.push(fish[key]);
       }
+      serviceLocalStorage.set("acnhcritters_fish", fish);
     });
-
     dataService.getSeaData(function(seadata) {
       var sea = seadata.data;
       for (key in sea) {
@@ -81,8 +88,8 @@ myApp.controller("MainCtrl", function($scope, dataService, serviceLocalStorage) 
         sea[key]["displayname"] = setname;
         dataset.push(sea[key]);
       }
+      serviceLocalStorage.set("acnhcritters_sea", sea);
     });
-
     dataService.getBugData(function(bugdata) {
       var bugs = bugdata.data;
       for (key in bugs) {
@@ -96,14 +103,32 @@ myApp.controller("MainCtrl", function($scope, dataService, serviceLocalStorage) 
         bugs[key]["displayname"] = setname;
         dataset.push(bugs[key]);
       }
+      serviceLocalStorage.set("acnhcritters_bugs", bugs);
     });
+  };
 
-    $scope.critters = dataset;
-    console.log($scope.critters);
+  $scope.setCritterData = function() {
+    var setdata = new Array();
+    switch ($scope.crittertype) {
+      case "fish":
+        setdata = serviceLocalStorage.get("acnhcritters_fish");
+        break;
+      case "sea":
+        setdata = serviceLocalStorage.get("acnhcritters_sea");
+        break;
+      case "bug":
+        setdata = serviceLocalStorage.get("acnhcritters_bugs");
+        break;
+    }
+    var result = Object.keys(setdata).map(function(key) {
+      return setdata[key];
+    });
+    $scope.critters = result;
   };
 
   $scope.orderByField = "price";
   $scope.reverseSort = true;
   $scope.searchtext = "";
   $scope.searchtype = "filter";
+  $scope.crittertype = "fish";
 });

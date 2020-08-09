@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="./js/app.js"></script>
   </head>
-  <body ng-cloak ng-init="getCritterData()">
+  <body ng-cloak ng-init="init()">
     <div class="container">
       <div class="text-center py-4">
         <div class="h6">Animal Crossing: New Horizons</div>
@@ -25,29 +25,13 @@
         <div class="col-12 col-md-6 mb-2">
           <input type="search" class="form-control" ng-model="searchtext" placeholder="Find a Critter..." />
         </div>
-        <!-- <div class="col-12 col-md-6">
-          <div class="d-flex justify-content-start align-items-center h-100">
-            <div class="pl-3">
-              <input ng-model="searchtype" value="filter" id="searchtype_filter" name="searchtype" class="checkbox-custom" type="radio" />
-              <label for="searchtype_filter" class="checkbox-custom-label">
-                Filter
-              </label>
-            </div>
-            <div class="pl-3">
-              <input ng-model="searchtype" value="highlight" id="searchtype_highlight" name="searchtype" class="checkbox-custom" type="radio" />
-              <label for="searchtype_highlight" class="checkbox-custom-label">
-                Highlight
-              </label>
-            </div>
-          </div>
-        </div> -->
-        <!-- <div class="col-12 col-md-6 mb-2">
-          <select name="crittertype" id="crittertype" ng-model="crittertype" class="form-control">
+        <div class="col-12 col-md-6 mb-2">
+          <select name="crittertype" id="crittertype" ng-model="crittertype" class="form-control" ng-change="setCritterData()">
             <option value="fish">Fish</option>
-            <option value="bugs">Bugs</option>
-            <option value="seacreatures">Sea Creatures</option>
+            <option value="bug">Bugs</option>
+            <option value="sea">Sea Creatures</option>
           </select>
-        </div> -->
+        </div>
       </div>
 
       <div>
@@ -72,11 +56,10 @@
                   </span>
                 </a>
               </th>
-              <!-- <th>Availability</th> -->
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="critter in critters | orderBy:orderByField:reverseSort | filter:{ displayname: searchtext }">
+            <tr ng-repeat="critter in critters | orderBy:orderByField:reverseSort | filter:{ displayname: searchtext } | filter:{ type: crittertype }">
               <td class="align-middle">
                 <div class="d-flex justify-content-start align-items-center">
                   <img ng-src="{{critter.icon_uri}}" class="img-fluid" style="height: 50px;" alt="" />
@@ -87,11 +70,6 @@
                 </div>
               </td>
               <td class="align-middle">{{ critter.price | currency:'':0 }}</td>
-              <!-- <td class="align-middle">
-                <div>{{ critter.availability.location }}</div>
-                <div class="small" ng-if="critter.availability.time">{{ critter.availability.time }}</div>
-                <div class="small" ng-if="!critter.availability.time">Any time</div>
-              </td> -->
             </tr>
           </tbody>
         </table>
