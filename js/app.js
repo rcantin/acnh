@@ -1,4 +1,4 @@
-var myApp = angular.module("myApp", []);
+var myApp = angular.module("myApp", ["angular-toArrayFilter"]);
 
 myApp.factory("serviceSessionStorage", [
   "$rootScope",
@@ -28,107 +28,115 @@ myApp.factory("serviceLocalStorage", [
   }
 ]);
 
-myApp.service("dataService", function($http) {
-  delete $http.defaults.headers.common["X-Requested-With"];
-  this.getFishData = function(callbackFunc) {
-    $http.get("https://acnhapi.com/v1/fish").then(function(data) {
-      callbackFunc(data);
-    });
-  };
-  this.getSeaData = function(callbackFunc) {
-    $http.get("https://acnhapi.com/v1/sea").then(function(data) {
-      callbackFunc(data);
-    });
-  };
-  this.getBugData = function(callbackFunc) {
-    $http.get("https://acnhapi.com/v1/bugs").then(function(data) {
-      callbackFunc(data);
-    });
-  };
-});
+// myApp.service("dataService", function($http) {
+//   delete $http.defaults.headers.common["X-Requested-With"];
+//   this.getCritterData = function(callbackFunc, type) {
+//     let url = "../data/" + type + ".json";
+//     $http.get(url).then(function(data) {
+//       callbackFunc(data);
+//     });
+//   };
+//   this.getFishData = function(callbackFunc) {
+//     $http.get("../data/fish.json").then(function(data) {
+//       callbackFunc(data);
+//     });
+//   };
+//   this.getSeaData = function(callbackFunc) {
+//     $http.get("../data/sea.json").then(function(data) {
+//       callbackFunc(data);
+//     });
+//   };
+//   this.getBugData = function(callbackFunc) {
+//     $http.get("../data/bug.json").then(function(data) {
+//       callbackFunc(data);
+//     });
+//   };
+// });
 
-myApp.controller("MainCtrl", function($scope, dataService, serviceLocalStorage) {
+myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
   $scope.today = new Date();
 
   $scope.init = function() {
-    if (!serviceLocalStorage.get("acnhcritters_fish") || !serviceLocalStorage.get("acnhcritters_sea") || !serviceLocalStorage.get("acnhcritters_bugs")) {
-      console.log("Getting Critters from server API");
-      $scope.getCritterData();
+    $scope.orderByField = "price";
+    $scope.reverseSort = true;
+    $scope.searchtext = "";
+    $scope.searchtype = "filter";
+    $scope.crittertype = "fish";
+    $scope.getAllCritters();
+  };
+
+  $scope.getAllCritters = function() {
+    $scope.crittersloaded = false;
+    $scope.critters = [];
+
+    if (serviceLocalStorage.get("acnhcritters")) {
+      console.log("Getting critter data from browser storage...");
+      $scope.critters = serviceLocalStorage.get("acnhcritters");
+      $scope.crittersloaded = true;
+    } else {
+      console.log("Getting critter data from JSON file...");
+      $http({
+        method: "GET",
+        url: "../data/critters.json"
+      }).then(
+        function successCallback(response) {
+          critterdata = response.data;
+          $scope.critters = critterdata;
+          $scope.crittersloaded = true;
+          serviceLocalStorage.set("acnhcritters", critterdata);
+        },
+        function errorCallback(response) {
+          console.log("An error occurred getting data.", response);
+        }
+      );
     }
-    $scope.setCritterData();
   };
 
-  $scope.getCritterData = function() {
-    var dataset = new Array();
-    dataService.getFishData(function(fishdata) {
-      var fish = fishdata.data;
-      for (key in fish) {
-        fish[key]["type"] = "fish";
-        const namesarr = Object.entries(fish[key].name);
-        for (i = 0; i < namesarr.length; i++) {
-          if (namesarr[i][0] == "name-USen") {
-            setname = namesarr[i][1];
-          }
-        }
-        fish[key]["displayname"] = setname;
-        dataset.push(fish[key]);
-      }
-      serviceLocalStorage.set("acnhcritters_fish", fish);
-    });
-    dataService.getSeaData(function(seadata) {
-      var sea = seadata.data;
-      for (key in sea) {
-        sea[key]["type"] = "sea";
-        const namesarr = Object.entries(sea[key].name);
-        for (i = 0; i < namesarr.length; i++) {
-          if (namesarr[i][0] == "name-USen") {
-            setname = namesarr[i][1];
-          }
-        }
-        sea[key]["displayname"] = setname;
-        dataset.push(sea[key]);
-      }
-      serviceLocalStorage.set("acnhcritters_sea", sea);
-    });
-    dataService.getBugData(function(bugdata) {
-      var bugs = bugdata.data;
-      for (key in bugs) {
-        bugs[key]["type"] = "bug";
-        const namesarr = Object.entries(bugs[key].name);
-        for (i = 0; i < namesarr.length; i++) {
-          if (namesarr[i][0] == "name-USen") {
-            setname = namesarr[i][1];
-          }
-        }
-        bugs[key]["displayname"] = setname;
-        dataset.push(bugs[key]);
-      }
-      serviceLocalStorage.set("acnhcritters_bugs", bugs);
-    });
-  };
+  // $scope.getCritterData = function() {
+  //   $scope.crittersloaded = false;
+  //   var crittertype = $scope.crittertype;
+  //   $scope.critters = new Array();
+  //   $http({
+  //     method: "GET",
+  //     url: "../data/" + crittertype + ".json"
+  //   }).then(
+  //     function successCallback(response) {
+  //       var critterdata = response.data;
+  //       var dataset = new Array();
+  //       for (key in critterdata) {
+  //         const namesarr = Object.entries(critterdata[key].name);
+  //         for (i = 0; i < namesarr.length; i++) {
+  //           if (namesarr[i][0] == "name-USen") {
+  //             setname = namesarr[i][1];
+  //           }
+  //         }
+  //         critterdata[key]["displayname"] = setname;
+  //         critterdata[key]["type"] = crittertype;
+  //         dataset.push(critterdata[key]);
+  //       }
+  //       $scope.critters = critterdata;
+  //       console.log($scope.critters);
+  //       $scope.crittersloaded = true;
+  //     },
+  //     function errorCallback(response) {
+  //       console.log("An error occurred getting data.", response);
+  //     }
+  //   );
+  // };
+});
 
-  $scope.setCritterData = function() {
-    var setdata = new Array();
-    switch ($scope.crittertype) {
-      case "fish":
-        setdata = serviceLocalStorage.get("acnhcritters_fish");
-        break;
-      case "sea":
-        setdata = serviceLocalStorage.get("acnhcritters_sea");
-        break;
-      case "bug":
-        setdata = serviceLocalStorage.get("acnhcritters_bugs");
-        break;
-    }
-    var result = Object.keys(setdata).map(function(key) {
-      return setdata[key];
+myApp.filter("custom", function() {
+  return function(input, search) {
+    if (!input) return input;
+    if (!search) return input;
+    var expected = ("" + search).toLowerCase();
+    var result = {};
+    angular.forEach(input, function(value, key) {
+      var actual = ("" + value).toLowerCase();
+      if (actual.indexOf(expected) !== -1) {
+        result[key] = value;
+      }
     });
-    $scope.critters = result;
+    return result;
   };
-
-  $scope.orderByField = "price";
-  $scope.reverseSort = true;
-  $scope.searchtext = "";
-  $scope.searchtype = "filter";
-  $scope.crittertype = "fish";
 });

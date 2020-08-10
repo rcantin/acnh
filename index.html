@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="theme-color" content="#000000" />
-    <link href="scss/theme.css" type="text/css" rel="Stylesheet" />
+    <link href="./scss/theme.css" type="text/css" rel="Stylesheet" />
     <script defer src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
     <link rel="shortcut icon" href="./img/nookleaf.png" type="image/png" />
     <title>Critterpedia Lookup</title>
@@ -12,9 +12,14 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="./node_modules/angular-toarrayfilter/toArrayFilter.js"></script>
     <script src="./js/app.js"></script>
   </head>
   <body ng-cloak ng-init="init()">
+    <!-- <div class="small">
+      <textarea ng-bind="critters|json" name="" id="" cols="30" rows="10"></textarea>
+    </div> -->
+
     <div class="container">
       <div class="text-center py-4">
         <div class="h6">Animal Crossing: New Horizons</div>
@@ -26,21 +31,27 @@
           <input type="search" class="form-control" ng-model="searchtext" placeholder="Find a Critter..." />
         </div>
         <div class="col-12 col-md-6 mb-2">
-          <select name="crittertype" id="crittertype" ng-model="crittertype" class="form-control" ng-change="setCritterData()">
+          <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='fish'}"> <input type="radio" name="crittertype" id="crittertype_fish" ng-model="crittertype" ng-change="getCritterData()" value="fish" /> Fish </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='bug'}"> <input type="radio" name="crittertype" id="crittertype_bug" ng-model="crittertype" ng-change="getCritterData()" value="bug" /> Bugs </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='sea'}"> <input type="radio" name="crittertype" id="crittertype_sea" ng-model="crittertype" ng-change="getCritterData()" value="sea" /> Sea </label>
+          </div>
+          <!-- <select name="crittertype" id="crittertype" ng-model="crittertype" class="form-control" ng-change="getCritterData()">
             <option value="fish">Fish</option>
-            <option value="bug">Bugs</option>
+            <option value="bugs">Bugs</option>
             <option value="sea">Sea Creatures</option>
-          </select>
+          </select> -->
         </div>
       </div>
 
       <div>
-        <table class="table table-hover table-striped">
+        <table class="table table-hover table-sm">
           <thead>
             <tr>
+              <th></th>
               <th>
-                <a href="#" ng-click="orderByField='displayname'; reverseSort = !reverseSort">
-                  Name
+                <a href="#" ng-click="orderByField='displayname'; reverseSort = !reverseSort" class="text-nowrap">
+                  Critter
                   <span ng-show="orderByField == 'displayname'">
                     <span ng-show="!reverseSort"><i class="fas fa-sort-up"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-sort-down"></i></span>
@@ -48,7 +59,7 @@
                 </a>
               </th>
               <th>
-                <a href="#" ng-click="orderByField='price'; reverseSort = !reverseSort">
+                <a href="#" ng-click="orderByField='price'; reverseSort = !reverseSort" class="text-nowrap">
                   Price
                   <span ng-show="orderByField == 'price'">
                     <span ng-show="!reverseSort"><i class="fas fa-sort-up"></i></span>
@@ -59,17 +70,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="critter in critters | orderBy:orderByField:reverseSort | filter:{ displayname: searchtext } | filter:{ type: crittertype }">
+            <tr ng-if="!crittersloaded">
+              <td colspan="4" class="p-4 text-center font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data...</td>
+            </tr>
+            <tr ng-if="crittersloaded" ng-repeat="(key, value) in critters | toArray | orderBy:orderByField:reverseSort | filter:{ displayname: searchtext } | filter:{ type: crittertype }">
               <td class="align-middle">
-                <div class="d-flex justify-content-start align-items-center">
-                  <img ng-src="{{critter.icon_uri}}" class="img-fluid" style="height: 50px;" alt="" />
-                  <div class="ml-2">
-                    <div class="text-capitalize">{{ critter.displayname }}</div>
-                    <div class="small">{{ critter.availability.rarity }}</div>
-                  </div>
-                </div>
+                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 40px;" alt="" />
               </td>
-              <td class="align-middle">{{ critter.price | currency:'':0 }}</td>
+              <td class="align-middle text-capitalize">{{ value.displayname }}</td>
+              <td class="align-middle">{{ value.price | currency:'':0 }}</td>
             </tr>
           </tbody>
         </table>
