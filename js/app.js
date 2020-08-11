@@ -77,7 +77,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
       console.log("Getting critter data from JSON file...");
       $http({
         method: "GET",
-        url: "../data/critters.json"
+        url: "./data/critters.json"
       }).then(
         function successCallback(response) {
           critterdata = response.data;
