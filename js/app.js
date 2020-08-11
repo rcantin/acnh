@@ -60,7 +60,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.orderByField = "price";
     $scope.reverseSort = true;
     $scope.searchtext = "";
-    $scope.searchtype = "filter";
+    $scope.lookuptype = "filter";
     $scope.crittertype = "fish";
     $scope.getAllCritters();
   };
@@ -125,18 +125,32 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
   // };
 });
 
-myApp.filter("custom", function() {
-  return function(input, search) {
-    if (!input) return input;
-    if (!search) return input;
-    var expected = ("" + search).toLowerCase();
-    var result = {};
-    angular.forEach(input, function(value, key) {
-      var actual = ("" + value).toLowerCase();
-      if (actual.indexOf(expected) !== -1) {
-        result[key] = value;
+myApp.filter("search", function() {
+  return function(rows, lookuptype, searchtext) {
+    var expected = ("" + searchtext).toLowerCase();
+    var result = [];
+    if (lookuptype == "filter") {
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].highlight = false;
+        var actual = ("" + rows[i].displayname).toLowerCase();
+        if (actual.indexOf(expected) !== -1) {
+          result.push(rows[i]);
+        }
       }
-    });
+    }
+    if (lookuptype == "highlight") {
+      for (var i = 0; i < rows.length; i++) {
+        rows[i].highlight = false;
+        if (searchtext) {
+          var actual = ("" + rows[i].displayname).toLowerCase();
+          if (actual.indexOf(expected) !== -1) {
+            rows[i].highlight = true;
+          }
+        }
+        result.push(rows[i]);
+      }
+    }
+    console.log(result);
     return result;
   };
 });
