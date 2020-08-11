@@ -23,7 +23,7 @@
       </div>
 
       <div class="row py-4">
-        <div class="col-12 col-md-6 mb-4">
+        <div class="col-12 col-md-6 col-lg-5 mb-4">
           <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
             <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='fish'}"> <input type="radio" name="crittertype" id="crittertype_fish" ng-model="crittertype" ng-change="getCritterData()" value="fish" /> Fish </label>
             <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='bug'}"> <input type="radio" name="crittertype" id="crittertype_bug" ng-model="crittertype" ng-change="getCritterData()" value="bug" /> Bugs </label>
@@ -31,7 +31,7 @@
             <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='all'}"> <input type="radio" name="crittertype" id="crittertype_all" ng-model="crittertype" ng-change="getCritterData()" value="" /> All </label>
           </div>
         </div>
-        <div class="col-12 col-md-6 mb-2">
+        <div class="col-12 col-md-6 col-lg-6 offset-lg-1 mb-2">
           <div class="input-group">
             <input type="search" class="form-control" ng-model="searchtext" placeholder="Critter lookup..." aria-describedby="lookupbtns" />
             <div class="input-group-append btn-group btn-group-toggle" id="lookupbtns" data-toggle="buttons">
