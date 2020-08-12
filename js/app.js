@@ -62,6 +62,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.searchtext = "";
     $scope.lookuptype = "filter";
     $scope.crittertype = "fish";
+    $scope.hemisphere = "northern";
     $scope.getAllCritters();
   };
 
@@ -92,43 +93,24 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     }
   };
 
-  // $scope.getCritterData = function() {
-  //   $scope.crittersloaded = false;
-  //   var crittertype = $scope.crittertype;
-  //   $scope.critters = new Array();
-  //   $http({
-  //     method: "GET",
-  //     url: "../data/" + crittertype + ".json"
-  //   }).then(
-  //     function successCallback(response) {
-  //       var critterdata = response.data;
-  //       var dataset = new Array();
-  //       for (key in critterdata) {
-  //         const namesarr = Object.entries(critterdata[key].name);
-  //         for (i = 0; i < namesarr.length; i++) {
-  //           if (namesarr[i][0] == "name-USen") {
-  //             setname = namesarr[i][1];
-  //           }
-  //         }
-  //         critterdata[key]["displayname"] = setname;
-  //         critterdata[key]["type"] = crittertype;
-  //         dataset.push(critterdata[key]);
-  //       }
-  //       $scope.critters = critterdata;
-  //       console.log($scope.critters);
-  //       $scope.crittersloaded = true;
-  //     },
-  //     function errorCallback(response) {
-  //       console.log("An error occurred getting data.", response);
-  //     }
-  //   );
-  // };
+  // $("#modalDetails").on("show.bs.modal", function(event) {
+  //   var opener = $(event.relatedTarget); // opener that triggered the modal
+  //   var recipient = opener.data("file-name"); // Extract info from data-* attributes
+  //   var critters = Object.values($scope.critters);
+
+  //   var result = critters.filter(obj => {
+  //     return obj["file-name"] === recipient;
+  //   });
+  //   console.log(result);
+  //   $scope.detailmodalcontent = result;
+  // });
 });
 
 myApp.filter("search", function() {
   return function(rows, lookuptype, searchtext) {
     var expected = ("" + searchtext).toLowerCase();
     var result = [];
+    console.log(rows);
     if (lookuptype == "filter") {
       for (var i = 0; i < rows.length; i++) {
         rows[i].highlight = false;
@@ -150,7 +132,7 @@ myApp.filter("search", function() {
         result.push(rows[i]);
       }
     }
-    console.log(result);
+    // console.log(result);
     return result;
   };
 });

@@ -14,8 +14,31 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-toarrayfilter/1.0.3/toArrayFilter.min.js" integrity="sha512-NQtYf59i2deooceVdYJ5b5RJnSWJMAbM+NhTXNOzU2WgwZtf1X0+r7VaLGLkM1ijKC0lvdYjIG+LN8+Wbzr9sA==" crossorigin="anonymous"></script>
     <script src="./js/app.js"></script>
+    <script></script>
   </head>
   <body ng-cloak ng-init="init()">
+    <!-- <div class="modal fade" id="modalDetails" tabindex="-1" aria-labelledby="modalDetailsLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalDetailsLabel">{{ detailmodalcontent.displayname }}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div>
+              <div>{{ detailmodalcontent.price }}</div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Send message</button>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <div class="container">
       <div class="text-center pt-4">
         <div class="h6">Animal Crossing: New Horizons</div>
@@ -44,6 +67,47 @@
       </div>
 
       <div>
+        <div class="d-none" ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}" ng-if="crittersloaded" ng-repeat="(key, value) in critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | filter:{ type: crittertype }">
+          <div class="d-flex justify-content-between align-items-center border-top py-1">
+            <div>
+              <!-- <a href="#" class="btn btn-link" data-toggle="collapse" data-target="#{{ value['file-name'] }}" aria-expanded="false"><i class="fas fa-plus expanded-indicator"></i></a> -->
+              <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 35px;" alt="" />
+              <span class="text-capitalize ml-2">{{ value.displayname }}</span>
+            </div>
+            <div>
+              <span>{{ value.price | currency:'':0 }}</span>
+            </div>
+          </div>
+          <div class="collapse" id="{{ value['file-name'] }}">
+            <div class="mt-3 mb-4 border-left border-primary ml-3 pl-3">
+              <div class="">
+                <div class="h3 text-capitalize">{{ value.displayname }}</div>
+                <div ng-if="value.price">Price: {{ value.price | currency:'':0 }} <small>bells</small></div>
+                <div ng-if="value.shadow">Shadow: {{ value.shadow }}</div>
+                <div ng-if="value.speed">Speed: {{ value.speed }}</div>
+              </div>
+              <div class="pt-4 small">
+                <div class="h5">Availability</div>
+                <div ng-if="value.price">Rarity: {{ value.availability.rarity }}</div>
+                <div ng-if="value.price">Location: {{ value.availability.location }}</div>
+                <div ng-if="value.price">Months: <span class="badge badge-success" ng-repeat="month in value.availability['month-array-northern']">{{ month }}</span></div>
+              </div>
+              <div class="pt-4 small">
+                <div class="h5">Catch Phrase</div>
+                <div class="">{{ value['catch-phrase'] }}</div>
+              </div>
+              <div class="pt-4 small">
+                <div class="h5">Museum Phrase</div>
+                <div class="">{{ value['museum-phrase'] }}</div>
+              </div>
+              <div class="pt-4 d-flex justify-content-between align-items-start">
+                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="max-width: 100px;" alt="" />
+                <img ng-src="{{value.image_uri}}" class="img-fluid" style="max-width: 200px;" alt="" />
+              </div>
+            </div>
+          </div>
+        </div>
+
         <table class="table table-hover table-sm">
           <thead>
             <tr>
@@ -65,6 +129,7 @@
                   </span>
                 </a>
               </th>
+              <!-- <th></th> -->
             </tr>
           </thead>
           <tbody>
@@ -77,6 +142,9 @@
                 <span class="ml-2">{{ value.displayname }}</span>
               </td>
               <td class="align-middle">{{ value.price | currency:'':0 }}</td>
+              <!-- <td class="align-middle">
+                <button class="btn btn-link" data-toggle="modal" data-target="#modalDetails" data-file-name="{{value['file-name']}}"><i class="fas fa-chevron-right"></i></button>
+              </td> -->
             </tr>
           </tbody>
         </table>

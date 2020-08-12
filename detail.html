@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp" ng-controller="MainCtrl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <link href="./scss/theme.css" type="text/css" rel="Stylesheet" />
+    <script defer src="https://use.fontawesome.com/releases/v5.13.0/js/all.js"></script>
+    <link rel="shortcut icon" href="./img/nookleaf.png" type="image/png" />
+    <title>ACNH Critters</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-toarrayfilter/1.0.3/toArrayFilter.min.js" integrity="sha512-NQtYf59i2deooceVdYJ5b5RJnSWJMAbM+NhTXNOzU2WgwZtf1X0+r7VaLGLkM1ijKC0lvdYjIG+LN8+Wbzr9sA==" crossorigin="anonymous"></script>
+    <script src="./js/app.js"></script>
+    <script></script>
+  </head>
+  <body ng-cloak ng-init="init()">
+    <div class="container">
+      <div class="text-center pt-4">
+        <div class="h6">Animal Crossing: New Horizons</div>
+        <div class="h2">Critterpedia Details</div>
+      </div>
+
+      <div class="row py-4">
+        <div class="col-12 col-sm-6 col-lg-4 mb-4">
+          <div class="font-weight-bold">Critter Type</div>
+          <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='fish'}"> <input type="radio" name="crittertype" id="crittertype_fish" ng-model="crittertype" ng-change="getCritterData()" value="fish" /> Fish </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='bug'}"> <input type="radio" name="crittertype" id="crittertype_bug" ng-model="crittertype" ng-change="getCritterData()" value="bug" /> Bugs </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='sea'}"> <input type="radio" name="crittertype" id="crittertype_sea" ng-model="crittertype" ng-change="getCritterData()" value="sea" /> Sea </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='all'}"> <input type="radio" name="crittertype" id="crittertype_all" ng-model="crittertype" ng-change="getCritterData()" value="" /> All </label>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+          <div class="font-weight-bold">Hemisphere</div>
+          <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
+            <label class="btn btn-outline-primary" ng-class="{'active':hemisphere=='northern'}"> <input type="radio" name="hemisphere" id="hemisphere_northern" ng-model="hemisphere" value="northern" /> Northern </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':hemisphere=='southern'}"> <input type="radio" name="hemisphere" id="hemisphere_southern" ng-model="hemisphere" value="southern" /> Southern </label>
+          </div>
+        </div>
+        <div class="col-12 col-lg-5 col-xl-4 offset-xl-1 mb-4">
+          <div class="font-weight-bold">Critter Lookup</div>
+          <div class="input-group">
+            <input type="search" class="form-control" ng-model="searchtext" placeholder="Critter lookup..." aria-describedby="lookupbtns" />
+            <div class="input-group-append btn-group btn-group-toggle" id="lookupbtns" data-toggle="buttons">
+              <label class="btn btn-outline-primary" ng-class="{'active':lookuptype=='highlight'}"> <input type="radio" name="lookuptype" id="lookuptype_highlight" ng-model="lookuptype" value="highlight" /> Highlight </label>
+              <label class="btn btn-outline-primary" ng-class="{'active':lookuptype=='filter'}"> <input type="radio" name="lookuptype" id="lookuptype_filter" ng-model="lookuptype" value="filter" /> Filter </label>
+            </div>
+          </div>
+          <div class="small pt-2 text-center">Filter hides everything except matches. Highlight keeps everything visible but highlights rows that match.</div>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover table-md-responsive">
+          <thead>
+            <tr>
+              <th>
+                <a href="#" ng-click="orderByField='displayname'; reverseSort = !reverseSort" class="text-nowrap"
+                  >Critter
+                  <span ng-show="orderByField == 'displayname'">
+                    <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
+                    <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a href="#" ng-click="orderByField='price'; reverseSort = !reverseSort" class="text-nowrap"
+                  >Price
+                  <span ng-show="orderByField == 'price'">
+                    <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
+                    <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a href="#" ng-click="orderByField='availability.location'; reverseSort = !reverseSort" class="text-nowrap"
+                  >Location
+                  <span ng-show="orderByField == 'availability.location'">
+                    <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
+                    <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
+                  </span>
+                </a>
+              </th>
+              <th>
+                <a href="#" ng-click="orderByField='shadow'; reverseSort = !reverseSort" class="text-nowrap"
+                  >Shadow
+                  <span ng-show="orderByField == 'shadow'">
+                    <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
+                    <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
+                  </span>
+                </a>
+              </th>
+              <!-- <th>
+                <a href="#" ng-click="orderByField='availability.rarity'; reverseSort = !reverseSort" class="text-nowrap"
+                  >Rarity
+                  <span ng-show="orderByField == 'availability.rarity'">
+                    <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
+                    <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
+                  </span>
+                </a>
+              </th> -->
+              <th class="text-nowrap">Times Available</th>
+              <th class="text-nowrap">Months Available</th>
+              <th class="text-nowrap">Rarity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-if="!crittersloaded">
+              <td colspan="4" class="p-4 text-center font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data...</td>
+            </tr>
+            <tr ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}" ng-if="crittersloaded" ng-repeat="(key, value) in critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | filter:{ type: crittertype }">
+              <td class="align-middle text-capitalize text-nowrap">
+                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 20px;" alt="" />
+                <span class="ml-2">{{ value.displayname }}</span>
+              </td>
+              <td class="align-middle text-nowrap">{{ value.price | currency:'':0 }}</td>
+              <td class="align-middle text-nowrap">
+                <div ng-if="value.availability.location">{{ value.availability.location }}</div>
+                <div ng-if="!value.availability.location" class="text-muted small">n/a</div>
+              </td>
+              <td class="align-middle text-nowrap">
+                <div ng-if="value.shadow">{{ value.shadow }}</div>
+                <div ng-if="!value.shadow" class="text-muted small">n/a</div>
+              </td>
+              <!-- <td class="align-middle">{{ value.availability.rarity }}</td> -->
+              <td class="align-middle text-nowrap">
+                <div ng-if="value.availability.time">{{ value.availability.time }}</div>
+                <div ng-if="!value.availability.time">All times</div>
+              </td>
+              <td class="align-middle text-nowrap">
+                <div class="d-flex justify-content-start align-items-center small">
+                  <div
+                    ng-if="hemisphere=='northern'"
+                    ng-repeat="month in [{name:'JAN',initial:'J',num:1},{name:'FEB',initial:'F',num:2},{name:'MAR',initial:'M',num:3},{name:'APR',initial:'A',num:4},{name:'MAY',initial:'M',num:5},{name:'JUN',initial:'J',num:6},{name:'JUL',initial:'J',num:7},{name:'AUG',initial:'A',num:8},{name:'SEP',initial:'S',num:9},{name:'OCT',initial:'O',num:10},{name:'NOV',initial:'N',num:11},{name:'DEC',initial:'D',num:12}]"
+                    style="margin: 1px; padding: 1px 4px;"
+                    ng-class="{'bg-success text-white':value.availability['month-array-northern'].includes(month.num), 'text-muted font-weight-light':!value.availability['month-array-northern'].includes(month.num)}"
+                  >
+                    {{ month.initial }}
+                  </div>
+                  <div
+                    ng-if="hemisphere=='southern'"
+                    ng-repeat="month in [{name:'JAN',initial:'J',num:1},{name:'FEB',initial:'F',num:2},{name:'MAR',initial:'M',num:3},{name:'APR',initial:'A',num:4},{name:'MAY',initial:'M',num:5},{name:'JUN',initial:'J',num:6},{name:'JUL',initial:'J',num:7},{name:'AUG',initial:'A',num:8},{name:'SEP',initial:'S',num:9},{name:'OCT',initial:'O',num:10},{name:'NOV',initial:'N',num:11},{name:'DEC',initial:'D',num:12}]"
+                    style="margin: 1px; padding: 1px 4px;"
+                    ng-class="{'bg-success text-white':value.availability['month-array-southern'].includes(month.num), 'text-muted font-weight-light':!value.availability['month-array-southern'].includes(month.num)}"
+                  >
+                    {{ month.initial }}
+                  </div>
+                </div>
+              </td>
+              <td class="align-middle text-nowrap">
+                <div ng-if="value.availability.rarity">{{ value.availability.rarity }}</div>
+                <div ng-if="!value.availability.rarity" class="text-muted small">n/a</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
