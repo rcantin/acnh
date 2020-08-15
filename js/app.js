@@ -63,6 +63,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.lookuptype = "filter";
     $scope.crittertype = "fish";
     $scope.hemisphere = "northern";
+    $scope.availmonth = "all";
     $scope.getAllCritters();
   };
 
@@ -133,6 +134,34 @@ myApp.filter("search", function() {
       }
     }
     // console.log(result);
+    return result;
+  };
+});
+
+myApp.filter("bymonth", function() {
+  return function(rows, availmonth, hemisphere) {
+    var result = [];
+    for (var i = 0; i < rows.length; i++) {
+      if (availmonth == "all") {
+        result.push(rows[i]);
+      } else {
+        if (rows[i].availability.isAllYear) {
+          result.push(rows[i]);
+        } else {
+          if (hemisphere == "northern") {
+            if (rows[i].availability["month-array-northern"].includes(availmonth)) {
+              result.push(rows[i]);
+            }
+          }
+          if (hemisphere == "southern") {
+            if (rows[i].availability["month-array-southern"].includes(availmonth)) {
+              result.push(rows[i]);
+            }
+          }
+        }
+      }
+    }
+    console.log(result);
     return result;
   };
 });

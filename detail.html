@@ -17,6 +17,8 @@
     <script></script>
   </head>
   <body ng-cloak ng-init="init()">
+    <div ng-include="'./_modal-lookup-help.html'"></div>
+
     <div class="container">
       <div class="text-center pt-4">
         <div class="h6">Animal Crossing: New Horizons</div>
@@ -24,7 +26,7 @@
       </div>
 
       <div class="row py-4">
-        <div class="col-12 col-sm-6 col-lg-4 mb-4">
+        <div class="col-12 col-sm-6 col-lg-3 mb-4">
           <div class="font-weight-bold">Critter Type</div>
           <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
             <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='fish'}"> <input type="radio" name="crittertype" id="crittertype_fish" ng-model="crittertype" ng-change="getCritterData()" value="fish" /> Fish </label>
@@ -40,8 +42,22 @@
             <label class="btn btn-outline-primary" ng-class="{'active':hemisphere=='southern'}"> <input type="radio" name="hemisphere" id="hemisphere_southern" ng-model="hemisphere" value="southern" /> Southern </label>
           </div>
         </div>
-        <div class="col-12 col-lg-5 col-xl-4 offset-xl-1 mb-4">
-          <div class="font-weight-bold">Critter Lookup</div>
+        <div class="col-12 col-sm-6 col-lg-2 mb-4">
+          <div class="font-weight-bold">Month Available</div>
+          <select name="availmonth" id="availmonth" ng-model="availmonth" class="form-control">
+            <option value="all">All months</option>
+            <option
+              ng-repeat="month in [{longname:'January',shortname:'JAN',initial:'J',num:1},{longname:'February',shortname:'FEB',initial:'F',num:2},{longname:'March',shortname:'MAR',initial:'M',num:3},{longname:'April',shortname:'APR',initial:'A',num:4},{longname:'May',shortname:'MAY',initial:'M',num:5},{longname:'June',shortname:'JUN',initial:'J',num:6},{longname:'July',shortname:'JUL',initial:'J',num:7},{longname:'August',shortname:'AUG',initial:'A',num:8},{longname:'September',shortname:'SEP',initial:'S',num:9},{longname:'October',shortname:'OCT',initial:'O',num:10},{longname:'November',shortname:'NOV',initial:'N',num:11},{longname:'December',shortname:'DEC',initial:'D',num:12}]"
+              ng-value="{{month.num}}"
+              >{{month.longname}}</option
+            >
+          </select>
+        </div>
+        <div class="col-12 col-lg-4 mb-4">
+          <div class="font-weight-bold">
+            Critter Lookup
+            <a href="#" data-toggle="modal" data-target="#modalLookupHelp" class="ml-2">What's this?</a>
+          </div>
           <div class="input-group">
             <input type="search" class="form-control" ng-model="searchtext" placeholder="Critter lookup..." aria-describedby="lookupbtns" />
             <div class="input-group-append btn-group btn-group-toggle" id="lookupbtns" data-toggle="buttons">
@@ -93,27 +109,18 @@
                   </span>
                 </a>
               </th>
-              <!-- <th>
-                <a href="#" ng-click="orderByField='availability.rarity'; reverseSort = !reverseSort" class="text-nowrap"
-                  >Rarity
-                  <span ng-show="orderByField == 'availability.rarity'">
-                    <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
-                    <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
-                  </span>
-                </a>
-              </th> -->
               <th class="text-nowrap">Times Available</th>
               <th class="text-nowrap">Months Available</th>
-              <th class="text-nowrap">Rarity</th>
+              <!-- <th class="text-nowrap">Rarity</th> -->
             </tr>
           </thead>
           <tbody>
             <tr ng-if="!crittersloaded">
               <td colspan="4" class="p-4 text-center font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data...</td>
             </tr>
-            <tr ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}" ng-if="crittersloaded" ng-repeat="(key, value) in critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | filter:{ type: crittertype }">
+            <tr ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}" ng-if="crittersloaded" ng-repeat="(key, value) in critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | filter:{ type: crittertype } | bymonth:availmonth:hemisphere">
               <td class="align-middle text-capitalize text-nowrap">
-                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 20px;" alt="" />
+                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 30px;" alt="" />
                 <span class="ml-2">{{ value.displayname }}</span>
               </td>
               <td class="align-middle text-nowrap">{{ value.price | currency:'':0 }}</td>
@@ -150,10 +157,10 @@
                   </div>
                 </div>
               </td>
-              <td class="align-middle text-nowrap">
+              <!-- <td class="align-middle text-nowrap">
                 <div ng-if="value.availability.rarity">{{ value.availability.rarity }}</div>
                 <div ng-if="!value.availability.rarity" class="text-muted small">n/a</div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
