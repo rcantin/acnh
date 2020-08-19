@@ -56,7 +56,7 @@ myApp.factory("serviceLocalStorage", [
 myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
   $scope.today = new Date();
 
-  $scope.init = function() {
+  $scope.initDetails = function() {
     $scope.orderByField = "price";
     $scope.reverseSort = true;
     $scope.searchtext = "";
@@ -65,6 +65,17 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.hemisphere = "northern";
     $scope.availmonth = "all";
     $scope.getAllCritters();
+  };
+
+  $scope.initVillagers = function() {
+    $scope.orderByField = "displayname";
+    $scope.reverseSort = false;
+    $scope.villagername = "";
+    $scope.villagergender = "All";
+    $scope.villagerhobby = "All";
+    $scope.villagerpersonality = "All";
+    $scope.villagerspecies = "All";
+    $scope.getAllVillagers();
   };
 
   $scope.getAllCritters = function() {
@@ -94,24 +105,81 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     }
   };
 
-  // $("#modalDetails").on("show.bs.modal", function(event) {
-  //   var opener = $(event.relatedTarget); // opener that triggered the modal
-  //   var recipient = opener.data("file-name"); // Extract info from data-* attributes
-  //   var critters = Object.values($scope.critters);
+  $scope.getAllVillagers = function() {
+    $scope.villagersloaded = false;
+    $scope.villagers = [];
 
-  //   var result = critters.filter(obj => {
-  //     return obj["file-name"] === recipient;
-  //   });
-  //   console.log(result);
-  //   $scope.detailmodalcontent = result;
-  // });
+    if (serviceLocalStorage.get("acnhvillagers")) {
+      console.log("Getting villager data from browser storage...");
+      $scope.villagers = serviceLocalStorage.get("acnhvillagers");
+      $scope.villagersloaded = true;
+      $scope.buildVillagerDropdowns();
+    } else {
+      console.log("Getting critter data from JSON file...");
+      $http({
+        method: "GET",
+        url: "./data/villagers.json"
+      }).then(
+        function successCallback(response) {
+          villagerdata = response.data;
+
+          const items = Object.entries(villagerdata);
+          for (const item of items) {
+            var names = item[1].name;
+            item[1].displayname = names["name-USen"];
+          }
+          console.log(villagerdata);
+          $scope.villagers = villagerdata;
+          $scope.villagersloaded = true;
+          serviceLocalStorage.set("acnhvillagers", villagerdata);
+          $scope.buildVillagerDropdowns();
+        },
+        function errorCallback(response) {
+          console.log("An error occurred getting data.", response);
+        }
+      );
+    }
+  };
+
+  $scope.buildVillagerDropdowns = function() {
+    var data = $scope.villagers;
+    var allgenders = [];
+    var allhobbies = [];
+    var allpersonalities = [];
+    var allspecies = [];
+    const items = Object.entries(data);
+    for (const item of items) {
+      allgenders.push(item[1].gender);
+      allhobbies.push(item[1].hobby);
+      allpersonalities.push(item[1].personality);
+      allspecies.push(item[1].species);
+    }
+    const unique = (value, index, self) => {
+      return self.indexOf(value) === index;
+    };
+    const uniquegenders = allgenders.filter(unique);
+    $scope.genders = uniquegenders;
+    const uniquehobbies = allhobbies.filter(unique);
+    $scope.hobbies = uniquehobbies;
+    const uniquepersonalities = allpersonalities.filter(unique);
+    $scope.personalities = uniquepersonalities;
+    const uniquespecies = allspecies.filter(unique);
+    $scope.species = uniquespecies;
+  };
 });
 
 myApp.filter("search", function() {
   return function(rows, lookuptype, searchtext) {
     var expected = ("" + searchtext).toLowerCase();
     var result = [];
-    console.log(rows);
+    if (!lookuptype) {
+      for (var i = 0; i < rows.length; i++) {
+        var actual = ("" + rows[i].displayname).toLowerCase();
+        if (actual.indexOf(expected) !== -1) {
+          result.push(rows[i]);
+        }
+      }
+    }
     if (lookuptype == "filter") {
       for (var i = 0; i < rows.length; i++) {
         rows[i].highlight = false;
@@ -158,6 +226,24 @@ myApp.filter("bymonth", function() {
               result.push(rows[i]);
             }
           }
+        }
+      }
+    }
+    console.log(result);
+    return result;
+  };
+});
+
+myApp.filter("trait", function() {
+  return function(rows, filteron, selected) {
+    console.log(filteron, selected);
+    var result = [];
+    for (var i = 0; i < rows.length; i++) {
+      if (selected == "All") {
+        result.push(rows[i]);
+      } else {
+        if (rows[i][filteron] == selected) {
+          result.push(rows[i]);
         }
       }
     }

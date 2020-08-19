@@ -35,6 +35,12 @@ $dark: #333333;
 $light: #efefef;
 $white: #ffffff;
 
+$navbar-dark-color: $white;
+$navbar-dark-hover-color: rgba($white, 0.8);
+$navbar-dark-active-color: $white;
+$navbar-dark-disabled-color: rgba($white, 0.5);
+$navbar-dark-toggler-border-color: transparent;
+
 a[aria-expanded="true"] > .expanded-indicator {
   transform: rotate(315deg);
   transition: transform 200ms ease;

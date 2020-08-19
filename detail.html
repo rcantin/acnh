@@ -16,16 +16,15 @@
     <script src="./js/app.js"></script>
     <script></script>
   </head>
-  <body ng-cloak ng-init="init()">
+  <body ng-cloak ng-init="initDetails()">
     <div ng-include="'./_modal-lookup-help.html'"></div>
 
-    <div class="container">
-      <div class="text-center pt-4">
-        <div class="h6">Animal Crossing: New Horizons</div>
-        <div class="h2">Critterpedia Details</div>
-      </div>
+    <div ng-include="'./_banner.html'"></div>
 
-      <div class="row py-4">
+    <div class="h1 py-4 text-center">Critterpedia</div>
+
+    <div class="container">
+      <div class="row">
         <div class="col-12 col-sm-6 col-lg-3 mb-4">
           <div class="font-weight-bold">Critter Type</div>
           <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
@@ -35,14 +34,14 @@
             <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='all'}"> <input type="radio" name="crittertype" id="crittertype_all" ng-model="crittertype" ng-change="getCritterData()" value="" /> All </label>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-lg-3 mb-4">
+        <div class="col-6 col-sm-6 col-lg-3 mb-4">
           <div class="font-weight-bold">Hemisphere</div>
           <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
             <label class="btn btn-outline-primary" ng-class="{'active':hemisphere=='northern'}"> <input type="radio" name="hemisphere" id="hemisphere_northern" ng-model="hemisphere" value="northern" /> Northern </label>
             <label class="btn btn-outline-primary" ng-class="{'active':hemisphere=='southern'}"> <input type="radio" name="hemisphere" id="hemisphere_southern" ng-model="hemisphere" value="southern" /> Southern </label>
           </div>
         </div>
-        <div class="col-12 col-sm-6 col-lg-2 mb-4">
+        <div class="col-6 col-sm-6 col-lg-2 mb-4">
           <div class="font-weight-bold">Month Available</div>
           <select name="availmonth" id="availmonth" ng-model="availmonth" class="form-control">
             <option value="all">All months</option>
@@ -69,7 +68,7 @@
       </div>
 
       <div class="table-responsive">
-        <table class="table table-hover table-md-responsive">
+        <table class="table table-hover table-md-responsive" style="min-width: 600px;">
           <thead>
             <tr>
               <th>
@@ -166,7 +165,7 @@
               </td> -->
             </tr>
             <tr ng-if="results.length > 0">
-              <td colspan="6" class="text-center">{{results.length}} Critters found</td>
+              <td colspan="6" class="text-center">{{ results.length }} Critter<span ng-if="results.length>1">s</span> found</td>
             </tr>
             <tr ng-if="results.length == 0">
               <td colspan="6" class="text-center p-3">
