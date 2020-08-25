@@ -19,9 +19,8 @@
   <body ng-cloak ng-init="initVillagers()">
     <div ng-include="'./banner.html'"></div>
 
-    <div class="h1 py-4 text-center">Villagers</div>
-
-    <div class="container">
+    <div class="container pt-5">
+      <div class="h1 py-4 text-center">Villagers</div>
       <div class="table-responsive">
         <table class="table table-hover table-sm table-md-responsive" style="min-width: 600px;">
           <tbody>
@@ -67,36 +66,36 @@
                 </a>
               </th>
               <th>
-                <a href="#" ng-click="orderByField='villagergender'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='gender'; reverseSort = !reverseSort" class="text-nowrap"
                   >Gender
-                  <span ng-show="orderByField == 'villagergender'">
+                  <span ng-show="orderByField == 'gender'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
                 </a>
               </th>
               <th>
-                <a href="#" ng-click="orderByField='villagerhobby'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='hobby'; reverseSort = !reverseSort" class="text-nowrap"
                   >Hobby
-                  <span ng-show="orderByField == 'villagerhobby'">
+                  <span ng-show="orderByField == 'hobby'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
                 </a>
               </th>
               <th>
-                <a href="#" ng-click="orderByField='villagerpersonality'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='personality'; reverseSort = !reverseSort" class="text-nowrap"
                   >Personality
-                  <span ng-show="orderByField == 'villagerpersonality'">
+                  <span ng-show="orderByField == 'personality'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
                 </a>
               </th>
               <th>
-                <a href="#" ng-click="orderByField='villagerspecies'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='species'; reverseSort = !reverseSort" class="text-nowrap"
                   >Species
-                  <span ng-show="orderByField == 'villagerspecies'">
+                  <span ng-show="orderByField == 'species'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
