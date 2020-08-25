@@ -109,7 +109,7 @@
             </tr>
             <tr ng-if="villagersloaded" ng-repeat="(key, value) in results = (villagers | toArray | search:'':villagername | orderBy:orderByField:reverseSort | trait:'gender':villagergender | trait:'hobby':villagerhobby | trait:'personality':villagerpersonality | trait:'species':villagerspecies)">
               <td class="align-middle text-nowrap">
-                <img ng-src="{{value.image_uri}}" class="img-fluid" style="height: 45px;" alt="" />
+                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 45px;" alt="" />
                 <span class="ml-2">{{ value.displayname }}</span>
               </td>
               <td class="align-middle text-nowrap">{{ value.gender }}</td>
