@@ -112,8 +112,8 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     if (serviceLocalStorage.get("acnhvillagers")) {
       console.log("Getting villager data from browser storage...");
       $scope.villagers = serviceLocalStorage.get("acnhvillagers");
-      $scope.villagersloaded = true;
       $scope.buildVillagerDropdowns();
+      $scope.villagersloaded = true;
     } else {
       console.log("Getting critter data from JSON file...");
       $http({
@@ -130,9 +130,9 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
           }
           console.log(villagerdata);
           $scope.villagers = villagerdata;
-          $scope.villagersloaded = true;
           serviceLocalStorage.set("acnhvillagers", villagerdata);
           $scope.buildVillagerDropdowns();
+          $scope.villagersloaded = true;
         },
         function errorCallback(response) {
           console.log("An error occurred getting data.", response);
