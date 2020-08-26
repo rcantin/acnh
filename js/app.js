@@ -53,7 +53,7 @@ myApp.factory("serviceLocalStorage", [
 //   };
 // });
 
-myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
+myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, serviceSessionStorage) {
   $scope.today = new Date();
 
   $scope.initCritters = function() {
@@ -64,7 +64,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.crittertype = "fish";
     $scope.hemisphere = "northern";
     $scope.availmonth = "all";
-    $scope.getAllCritters();
+    $scope.getCritterData($scope.crittertype);
   };
 
   $scope.initVillagers = function() {
@@ -75,7 +75,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.villagerhobby = "All";
     $scope.villagerpersonality = "All";
     $scope.villagerspecies = "All";
-    $scope.getAllVillagers();
+    $scope.getVillagerData();
   };
 
   $scope.initFossils = function() {
@@ -83,106 +83,122 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.reverseSort = false;
     $scope.fossilname = "";
     $scope.fossilgroup = "All";
-    $scope.getAllFossils();
+    $scope.getFossilData();
   };
 
-  $scope.getAllCritters = function() {
+  $scope.getCritterData = function(crittertype) {
     $scope.crittersloaded = false;
     $scope.critters = [];
-
-    if (serviceLocalStorage.get("acnhcritters")) {
-      console.log("Getting critter data from browser storage...");
-      $scope.critters = serviceLocalStorage.get("acnhcritters");
-      $scope.crittersloaded = true;
-    } else {
-      console.log("Getting critter data from JSON file...");
-      $http({
-        method: "GET",
-        url: "./data/critters.json"
-      }).then(
-        function successCallback(response) {
-          critterdata = response.data;
-          $scope.critters = critterdata;
-          $scope.crittersloaded = true;
-          serviceLocalStorage.set("acnhcritters", critterdata);
-        },
-        function errorCallback(response) {
-          console.log("An error occurred getting data.", response);
+    console.log("Getting critter data from ACNHAPI...");
+    $http({
+      method: "GET",
+      url: "https://acnhapi.com/v1/" + crittertype
+    }).then(
+      function successCallback(response) {
+        critterdata = response.data;
+        const items = Object.entries(critterdata);
+        for (const item of items) {
+          var names = item[1].name;
+          item[1].displayname = names["name-USen"];
         }
-      );
-    }
+        $scope.critters = critterdata;
+        $scope.crittersloaded = true;
+      },
+      function errorCallback(response) {
+        console.log("An error occurred getting data.", response);
+      }
+    );
   };
 
-  $scope.getAllVillagers = function() {
+  // $scope.getAllCritters = function() {
+  //   $scope.crittersloaded = false;
+  //   $scope.critters = [];
+  //   if (serviceSessionStorage.get("acnhcritters")) {
+  //     console.log("Getting critter data from browser session storage...");
+  //     $scope.critters = serviceSessionStorage.get("acnhcritters");
+  //     $scope.crittersloaded = true;
+  //   } else {
+  //     console.log("Getting critter data from API server...");
+  //     $http({
+  //       method: "GET",
+  //       url: "./data/critters.json"
+  //     }).then(
+  //       function successCallback(response) {
+  //         critterdata = response.data;
+  //         $scope.critters = critterdata;
+  //         $scope.crittersloaded = true;
+  //         serviceSessionStorage.set("acnhcritters", critterdata);
+  //       },
+  //       function errorCallback(response) {
+  //         console.log("An error occurred getting data.", response);
+  //       }
+  //     );
+  //     console.log("Getting critter data from JSON file...");
+  //     $http({
+  //       method: "GET",
+  //       url: "./data/critters.json"
+  //     }).then(
+  //       function successCallback(response) {
+  //         critterdata = response.data;
+  //         $scope.critters = critterdata;
+  //         $scope.crittersloaded = true;
+  //         serviceSessionStorage.set("acnhcritters", critterdata);
+  //       },
+  //       function errorCallback(response) {
+  //         console.log("An error occurred getting data.", response);
+  //       }
+  //     );
+  //   }
+  // };
+
+  $scope.getVillagerData = function() {
     $scope.villagersloaded = false;
     $scope.villagers = [];
-
-    if (serviceLocalStorage.get("acnhvillagers")) {
-      console.log("Getting villager data from browser storage...");
-      $scope.villagers = serviceLocalStorage.get("acnhvillagers");
-      $scope.buildVillagerDropdowns();
-      $scope.villagersloaded = true;
-    } else {
-      console.log("Getting critter data from JSON file...");
-      $http({
-        method: "GET",
-        url: "./data/villagers.json"
-      }).then(
-        function successCallback(response) {
-          villagerdata = response.data;
-
-          const items = Object.entries(villagerdata);
-          for (const item of items) {
-            var names = item[1].name;
-            item[1].displayname = names["name-USen"];
-          }
-          console.log(villagerdata);
-          $scope.villagers = villagerdata;
-          serviceLocalStorage.set("acnhvillagers", villagerdata);
-          $scope.buildVillagerDropdowns();
-          $scope.villagersloaded = true;
-        },
-        function errorCallback(response) {
-          console.log("An error occurred getting data.", response);
+    console.log("Getting villager data from ACNHAPI...");
+    $http({
+      method: "GET",
+      url: "https://acnhapi.com/v1/villagers"
+    }).then(
+      function successCallback(response) {
+        villagerdata = response.data;
+        const items = Object.entries(villagerdata);
+        for (const item of items) {
+          var names = item[1].name;
+          item[1].displayname = names["name-USen"];
         }
-      );
-    }
+        $scope.villagers = villagerdata;
+        $scope.buildVillagerDropdowns();
+        $scope.villagersloaded = true;
+      },
+      function errorCallback(response) {
+        console.log("An error occurred getting data.", response);
+      }
+    );
   };
 
-  $scope.getAllFossils = function() {
+  $scope.getFossilData = function() {
     $scope.fossilsloaded = false;
     $scope.fossils = [];
-
-    if (serviceLocalStorage.get("acnhfossils")) {
-      console.log("Getting fossil data from browser storage...");
-      $scope.fossils = serviceLocalStorage.get("acnhfossils");
-      $scope.buildFossilDropdowns();
-      $scope.fossilsloaded = true;
-    } else {
-      console.log("Getting fossil data from JSON file...");
-      $http({
-        method: "GET",
-        url: "./data/fossils.json"
-      }).then(
-        function successCallback(response) {
-          fossildata = response.data;
-
-          const items = Object.entries(fossildata);
-          for (const item of items) {
-            var names = item[1].name;
-            item[1].displayname = names["name-USen"];
-          }
-          console.log(fossildata);
-          $scope.fossils = fossildata;
-          serviceLocalStorage.set("acnhfossils", fossildata);
-          $scope.buildFossilDropdowns();
-          $scope.fossilsloaded = true;
-        },
-        function errorCallback(response) {
-          console.log("An error occurred getting data.", response);
+    console.log("Getting fossil data from ACNHAPI...");
+    $http({
+      method: "GET",
+      url: "https://acnhapi.com/v1/fossils"
+    }).then(
+      function successCallback(response) {
+        fossildata = response.data;
+        const items = Object.entries(fossildata);
+        for (const item of items) {
+          var names = item[1].name;
+          item[1].displayname = names["name-USen"];
         }
-      );
-    }
+        $scope.fossils = fossildata;
+        $scope.buildFossilDropdowns();
+        $scope.fossilsloaded = true;
+      },
+      function errorCallback(response) {
+        console.log("An error occurred getting data.", response);
+      }
+    );
   };
 
   $scope.buildVillagerDropdowns = function() {
@@ -287,14 +303,14 @@ myApp.filter("bymonth", function() {
         }
       }
     }
-    console.log(result);
+    // console.log(result);
     return result;
   };
 });
 
 myApp.filter("trait", function() {
   return function(rows, filteron, selected) {
-    console.log(filteron, selected);
+    // console.log(filteron, selected);
     var result = [];
     for (var i = 0; i < rows.length; i++) {
       if (selected == "All") {
@@ -305,7 +321,7 @@ myApp.filter("trait", function() {
         }
       }
     }
-    console.log(result);
+    // console.log(result);
     return result;
   };
 });

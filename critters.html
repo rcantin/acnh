@@ -27,10 +27,10 @@
         <div class="col-12 col-sm-6 col-lg-3 mb-4">
           <div class="font-weight-bold">Critter Type</div>
           <div class="btn-group btn-group-toggle w-100" data-toggle="buttons">
-            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='fish'}"> <input type="radio" name="crittertype" id="crittertype_fish" ng-model="crittertype" ng-change="getCritterData()" value="fish" /> Fish </label>
-            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='bug'}"> <input type="radio" name="crittertype" id="crittertype_bug" ng-model="crittertype" ng-change="getCritterData()" value="bug" /> Bugs </label>
-            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='sea'}"> <input type="radio" name="crittertype" id="crittertype_sea" ng-model="crittertype" ng-change="getCritterData()" value="sea" /> Sea </label>
-            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='all'}"> <input type="radio" name="crittertype" id="crittertype_all" ng-model="crittertype" ng-change="getCritterData()" value="" /> All </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='fish'}"> <input type="radio" name="crittertype" id="crittertype_fish" ng-model="crittertype" ng-change="getCritterData(crittertype)" value="fish" /> Fish </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='bugs'}"> <input type="radio" name="crittertype" id="crittertype_bugs" ng-model="crittertype" ng-change="getCritterData(crittertype)" value="bugs" /> Bugs </label>
+            <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='sea'}"> <input type="radio" name="crittertype" id="crittertype_sea" ng-model="crittertype" ng-change="getCritterData(crittertype)" value="sea" /> Sea </label>
+            <!-- <label class="btn btn-outline-primary" ng-class="{'active':crittertype=='all'}"> <input type="radio" name="crittertype" id="crittertype_all" ng-model="crittertype" ng-change="getCritterData(crittertype)" value="" /> All </label> -->
           </div>
         </div>
         <div class="col-6 col-sm-6 col-lg-3 mb-4">
@@ -65,7 +65,6 @@
           </div>
         </div>
       </div>
-
       <div class="table-responsive">
         <table class="table table-hover table-md-responsive" style="min-width: 600px;">
           <thead>
@@ -88,7 +87,7 @@
                   </span>
                 </a>
               </th>
-              <th>
+              <th ng-if="crittertype=='fish' || crittertype=='bugs'">
                 <a href="#" ng-click="orderByField='availability.location'; reverseSort = !reverseSort" class="text-nowrap"
                   >Location
                   <span ng-show="orderByField == 'availability.location'">
@@ -97,7 +96,7 @@
                   </span>
                 </a>
               </th>
-              <th>
+              <th ng-if="crittertype=='fish' || crittertype=='sea'">
                 <a href="#" ng-click="orderByField='shadow'; reverseSort = !reverseSort" class="text-nowrap"
                   >Shadow
                   <span ng-show="orderByField == 'shadow'">
@@ -115,24 +114,14 @@
             <tr ng-if="!crittersloaded">
               <td colspan="4" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data...</td>
             </tr>
-            <tr
-              ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}"
-              ng-if="crittersloaded"
-              ng-repeat="(key, value) in results = (critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | filter:{ type: crittertype } | bymonth:availmonth:hemisphere)"
-            >
+            <tr ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}" ng-if="crittersloaded" ng-repeat="(key, value) in results = (critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | bymonth:availmonth:hemisphere)">
               <td class="align-middle text-capitalize text-nowrap">
                 <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 30px;" alt="" />
                 <span class="ml-2">{{ value.displayname }}</span>
               </td>
               <td class="align-middle text-nowrap">{{ value.price | currency:'':0 }}</td>
-              <td class="align-middle text-nowrap">
-                <div ng-if="value.availability.location">{{ value.availability.location }}</div>
-                <div ng-if="!value.availability.location" class="text-muted small">n/a</div>
-              </td>
-              <td class="align-middle text-nowrap">
-                <div ng-if="value.shadow">{{ value.shadow }}</div>
-                <div ng-if="!value.shadow" class="text-muted small">n/a</div>
-              </td>
+              <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='bugs'">{{ value.availability.location }}</td>
+              <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='sea'">{{ value.shadow }}</td>
               <!-- <td class="align-middle">{{ value.availability.rarity }}</td> -->
               <td class="align-middle text-nowrap">
                 <div ng-if="value.availability.time">{{ value.availability.time }}</div>

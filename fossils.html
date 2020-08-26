@@ -29,24 +29,12 @@
                 <input type="fossilsearch" class="form-control" ng-model="fossilname" placeholder="Search..." />
               </td>
               <td>
-                <select name="fossilgroup" id="fossilgroup" class="form-control" ng-model="fossilgroup" ng-change="getFossilData()">
+                <select name="fossilgroup" id="fossilgroup" class="form-control" ng-model="fossilgroup">
                   <option value="All">All</option>
                   <option ng-repeat="item in groups" ng-value="'{{item}}'">{{item}}</option>
                 </select>
               </td>
               <td></td>
-              <!-- <td>
-                <select name="fossilpersonality" id="fossilpersonality" class="form-control" ng-model="fossilpersonality" ng-change="getfossilData()">
-                  <option value="All">All</option>
-                  <option ng-repeat="item in personalities" ng-value="'{{item}}'">{{item}}</option>
-                </select>
-              </td> -->
-              <!-- <td>
-                <select name="fossilspecies" id="fossilspecies" class="form-control" ng-model="fossilspecies" ng-change="getfossilData()">
-                  <option value="All">All</option>
-                  <option ng-repeat="item in species" ng-value="'{{item}}'">{{item}}</option>
-                </select>
-              </td> -->
             </tr>
           </tbody>
           <thead>
@@ -123,9 +111,9 @@
             <tr ng-if="fossilsloaded" ng-repeat="(key, value) in results = (fossils | toArray | search:'':fossilname | trait:'part-of':fossilgroup | orderBy:orderByField:reverseSort)">
               <td class="align-middle text-nowrap">
                 <img ng-src="{{value.image_uri}}" class="img-fluid" style="height: 45px;" alt="" />
-                <span class="ml-2 text-capitalize">{{ value.displayname }}</span>
+                <span class="ml-2">{{ value.displayname }}</span>
               </td>
-              <td class="align-middle text-nowrap text-capitalize">{{ value['part-of'] }}</td>
+              <td class="align-middle text-nowrap">{{ value['part-of'] }}</td>
               <td class="align-middle text-nowrap">{{ value.price | currency:'':0 }}</td>
             </tr>
             <tr ng-if="results.length > 0 && fossilsloaded">
