@@ -56,7 +56,7 @@ myApp.factory("serviceLocalStorage", [
 myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
   $scope.today = new Date();
 
-  $scope.initDetails = function() {
+  $scope.initCritters = function() {
     $scope.orderByField = "price";
     $scope.reverseSort = true;
     $scope.searchtext = "";
@@ -76,6 +76,14 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.villagerpersonality = "All";
     $scope.villagerspecies = "All";
     $scope.getAllVillagers();
+  };
+
+  $scope.initFossils = function() {
+    $scope.orderByField = "displayname";
+    $scope.reverseSort = false;
+    $scope.fossilname = "";
+    $scope.fossilgroup = "All";
+    $scope.getAllFossils();
   };
 
   $scope.getAllCritters = function() {
@@ -141,6 +149,42 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     }
   };
 
+  $scope.getAllFossils = function() {
+    $scope.fossilsloaded = false;
+    $scope.fossils = [];
+
+    if (serviceLocalStorage.get("acnhfossils")) {
+      console.log("Getting fossil data from browser storage...");
+      $scope.fossils = serviceLocalStorage.get("acnhfossils");
+      $scope.buildFossilDropdowns();
+      $scope.fossilsloaded = true;
+    } else {
+      console.log("Getting fossil data from JSON file...");
+      $http({
+        method: "GET",
+        url: "./data/fossils.json"
+      }).then(
+        function successCallback(response) {
+          fossildata = response.data;
+
+          const items = Object.entries(fossildata);
+          for (const item of items) {
+            var names = item[1].name;
+            item[1].displayname = names["name-USen"];
+          }
+          console.log(fossildata);
+          $scope.fossils = fossildata;
+          serviceLocalStorage.set("acnhfossils", fossildata);
+          $scope.buildFossilDropdowns();
+          $scope.fossilsloaded = true;
+        },
+        function errorCallback(response) {
+          console.log("An error occurred getting data.", response);
+        }
+      );
+    }
+  };
+
   $scope.buildVillagerDropdowns = function() {
     var data = $scope.villagers;
     var allgenders = [];
@@ -165,6 +209,20 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage) {
     $scope.personalities = uniquepersonalities;
     const uniquespecies = allspecies.filter(unique);
     $scope.species = uniquespecies;
+  };
+
+  $scope.buildFossilDropdowns = function() {
+    var data = $scope.fossils;
+    var allgroups = [];
+    const items = Object.entries(data);
+    for (const item of items) {
+      allgroups.push(item[1]["part-of"]);
+    }
+    const unique = (value, index, self) => {
+      return self.indexOf(value) === index;
+    };
+    const uniquegroups = allgroups.filter(unique);
+    $scope.groups = uniquegroups;
   };
 });
 
