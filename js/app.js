@@ -86,6 +86,13 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     $scope.getFossilData();
   };
 
+  $scope.initArt = function() {
+    $scope.orderByField = "displayname";
+    $scope.reverseSort = false;
+    $scope.artname = "";
+    $scope.getArtData();
+  };
+
   $scope.getCritterData = function(crittertype) {
     $scope.crittersloaded = false;
     $scope.critters = [];
@@ -109,47 +116,6 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
       }
     );
   };
-
-  // $scope.getAllCritters = function() {
-  //   $scope.crittersloaded = false;
-  //   $scope.critters = [];
-  //   if (serviceSessionStorage.get("acnhcritters")) {
-  //     console.log("Getting critter data from browser session storage...");
-  //     $scope.critters = serviceSessionStorage.get("acnhcritters");
-  //     $scope.crittersloaded = true;
-  //   } else {
-  //     console.log("Getting critter data from API server...");
-  //     $http({
-  //       method: "GET",
-  //       url: "./data/critters.json"
-  //     }).then(
-  //       function successCallback(response) {
-  //         critterdata = response.data;
-  //         $scope.critters = critterdata;
-  //         $scope.crittersloaded = true;
-  //         serviceSessionStorage.set("acnhcritters", critterdata);
-  //       },
-  //       function errorCallback(response) {
-  //         console.log("An error occurred getting data.", response);
-  //       }
-  //     );
-  //     console.log("Getting critter data from JSON file...");
-  //     $http({
-  //       method: "GET",
-  //       url: "./data/critters.json"
-  //     }).then(
-  //       function successCallback(response) {
-  //         critterdata = response.data;
-  //         $scope.critters = critterdata;
-  //         $scope.crittersloaded = true;
-  //         serviceSessionStorage.set("acnhcritters", critterdata);
-  //       },
-  //       function errorCallback(response) {
-  //         console.log("An error occurred getting data.", response);
-  //       }
-  //     );
-  //   }
-  // };
 
   $scope.getVillagerData = function() {
     $scope.villagersloaded = false;
@@ -194,6 +160,32 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
         $scope.fossils = fossildata;
         $scope.buildFossilDropdowns();
         $scope.fossilsloaded = true;
+      },
+      function errorCallback(response) {
+        console.log("An error occurred getting data.", response);
+      }
+    );
+  };
+
+  $scope.getArtData = function() {
+    $scope.artloaded = false;
+    $scope.art = [];
+    console.log("Getting art data from ACNHAPI...");
+    $http({
+      method: "GET",
+      url: "https://acnhapi.com/v1/art"
+    }).then(
+      function successCallback(response) {
+        artdata = response.data;
+        const items = Object.entries(artdata);
+        for (const item of items) {
+          var names = item[1].name;
+          item[1].displayname = names["name-USen"];
+        }
+        $scope.art = artdata;
+        console.log(artdata);
+        // $scope.buildArtDropdowns();
+        $scope.artloaded = true;
       },
       function errorCallback(response) {
         console.log("An error occurred getting data.", response);
