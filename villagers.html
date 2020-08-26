@@ -29,25 +29,25 @@
                 <input type="villagersearch" class="form-control" ng-model="villagername" placeholder="Search..." />
               </td>
               <td>
-                <select name="villagergender" id="villagergender" class="form-control" ng-model="villagergender" ng-change="getVillagerData()">
+                <select name="villagergender" id="villagergender" class="form-control" ng-model="villagergender">
                   <option value="All">All</option>
                   <option ng-repeat="item in genders" ng-value="'{{item}}'">{{item}}</option>
                 </select>
               </td>
               <td>
-                <select name="villagerhobby" id="villagerhobby" class="form-control" ng-model="villagerhobby" ng-change="getVillagerData()">
+                <select name="villagerhobby" id="villagerhobby" class="form-control" ng-model="villagerhobby">
                   <option value="All">All</option>
                   <option ng-repeat="item in hobbies" ng-value="'{{item}}'">{{item}}</option>
                 </select>
               </td>
               <td>
-                <select name="villagerpersonality" id="villagerpersonality" class="form-control" ng-model="villagerpersonality" ng-change="getVillagerData()">
+                <select name="villagerpersonality" id="villagerpersonality" class="form-control" ng-model="villagerpersonality">
                   <option value="All">All</option>
                   <option ng-repeat="item in personalities" ng-value="'{{item}}'">{{item}}</option>
                 </select>
               </td>
               <td>
-                <select name="villagerspecies" id="villagerspecies" class="form-control" ng-model="villagerspecies" ng-change="getVillagerData()">
+                <select name="villagerspecies" id="villagerspecies" class="form-control" ng-model="villagerspecies">
                   <option value="All">All</option>
                   <option ng-repeat="item in species" ng-value="'{{item}}'">{{item}}</option>
                 </select>
