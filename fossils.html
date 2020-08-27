@@ -66,61 +66,29 @@
                   </span>
                 </a>
               </th>
-              <!-- <th>
-                <a href="#" ng-click="orderByField='gender'; reverseSort = !reverseSort" class="text-nowrap"
-                  >Gender
-                  <span ng-show="orderByField == 'gender'">
-                    <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
-                    <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
-                  </span>
-                </a>
-              </th> -->
-              <!-- <th>
-                <a href="#" ng-click="orderByField='hobby'; reverseSort = !reverseSort" class="text-nowrap"
-                  >Hobby
-                  <span ng-show="orderByField == 'hobby'">
-                    <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
-                    <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
-                  </span>
-                </a>
-              </th> -->
-              <!-- <th>
-                <a href="#" ng-click="orderByField='personality'; reverseSort = !reverseSort" class="text-nowrap"
-                  >Personality
-                  <span ng-show="orderByField == 'personality'">
-                    <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
-                    <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
-                  </span>
-                </a>
-              </th> -->
-              <!-- <th>
-                <a href="#" ng-click="orderByField='species'; reverseSort = !reverseSort" class="text-nowrap"
-                  >Species
-                  <span ng-show="orderByField == 'species'">
-                    <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
-                    <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
-                  </span>
-                </a>
-              </th> -->
             </tr>
           </thead>
           <tbody>
             <tr ng-if="!fossilsloaded">
-              <td colspan="5" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting fossil data...</td>
+              <td colspan="3" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting fossil data...</td>
             </tr>
             <tr ng-if="fossilsloaded" ng-repeat="(key, value) in results = (fossils | toArray | search:'':fossilname | trait:'part-of':fossilgroup | orderBy:orderByField:reverseSort)">
-              <td class="align-middle text-nowrap">
-                <img ng-src="{{value.image_uri}}" class="img-fluid" style="height: 45px;" alt="" />
-                <span class="ml-2">{{ value.displayname }}</span>
+              <td class="align-middle">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div>
+                    <img ng-src="{{value.image_uri}}" style="height: 45px; width: 45px;" alt="" />
+                  </div>
+                  <div class="ml-2 text-capitalize">{{ value.displayname }}</div>
+                </div>
               </td>
               <td class="align-middle text-nowrap">{{ value['part-of'] }}</td>
               <td class="align-middle text-nowrap">{{ value.price | currency:'':0 }}</td>
             </tr>
             <tr ng-if="results.length > 0 && fossilsloaded">
-              <td colspan="6" class="py-3">{{ results.length }} fossil<span ng-if="results.length>1">s</span> found</td>
+              <td colspan="3" class="py-3">{{ results.length }} fossil<span ng-if="results.length>1">s</span> found</td>
             </tr>
             <tr ng-if="results.length == 0 && fossilsloaded">
-              <td colspan="6" class="py-3">
+              <td colspan="3" class="py-3">
                 <div class="text-danger h5 font-weight-bold"><i class="far fa-frown mr-1"></i> No fossils found</div>
                 <div>There aren't any fossils that match your filters &amp; search.</div>
               </td>

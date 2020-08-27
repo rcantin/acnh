@@ -65,12 +65,16 @@
           </thead>
           <tbody>
             <tr ng-if="!artloaded">
-              <td colspan="5" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting art data...</td>
+              <td colspan="3" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting art data...</td>
             </tr>
             <tr ng-if="artloaded" ng-repeat="(key, value) in results = (art | toArray | search:'':artname | orderBy:orderByField:reverseSort)">
-              <td class="align-middle text-nowrap text-capitalize">
-                <img ng-src="{{value.image_uri}}" class="img-fluid" style="height: 45px;" alt="" />
-                <span class="ml-2">{{ value.displayname }}</span>
+              <td class="align-middle">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div>
+                    <img ng-src="{{value.image_uri}}" style="height: 45px; width: 45px;" alt="" />
+                  </div>
+                  <div class="ml-2 text-capitalize">{{ value.displayname }}</div>
+                </div>
               </td>
               <td class="align-middle text-nowrap">
                 <span ng-if="value.hasFake">Yes</span>
@@ -79,10 +83,10 @@
               <td class="align-middle text-nowrap">{{ value['sell-price'] | currency:'':0 }}</td>
             </tr>
             <tr ng-if="results.length > 0 && artloaded">
-              <td colspan="6" class="py-3">{{ results.length }} piece<span ng-if="results.length>1">s</span> of art found</td>
+              <td colspan="3" class="py-3">{{ results.length }} piece<span ng-if="results.length>1">s</span> of art found</td>
             </tr>
             <tr ng-if="results.length == 0 && artloaded">
-              <td colspan="6" class="py-3">
+              <td colspan="3" class="py-3">
                 <div class="text-danger h5 font-weight-bold"><i class="far fa-frown mr-1"></i> No art found</div>
                 <div>There aren't any pieces of art that match your filters &amp; search.</div>
               </td>

@@ -108,9 +108,13 @@
               <td colspan="5" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Villager data...</td>
             </tr>
             <tr ng-if="villagersloaded" ng-repeat="(key, value) in results = (villagers | toArray | search:'':villagername | orderBy:orderByField:reverseSort | trait:'gender':villagergender | trait:'hobby':villagerhobby | trait:'personality':villagerpersonality | trait:'species':villagerspecies)">
-              <td class="align-middle text-nowrap">
-                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 45px;" alt="" />
-                <span class="ml-2">{{ value.displayname }}</span>
+              <td class="align-middle">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div>
+                    <img ng-src="{{value.icon_uri}}" style="height: 45px; width: 45px;" alt="" />
+                  </div>
+                  <div class="ml-2 text-capitalize">{{ value.displayname }}</div>
+                </div>
               </td>
               <td class="align-middle text-nowrap">{{ value.gender }}</td>
               <td class="align-middle text-nowrap">{{ value.hobby }}</td>
@@ -118,10 +122,10 @@
               <td class="align-middle text-nowrap">{{ value.species }}</td>
             </tr>
             <tr ng-if="results.length > 0 && villagersloaded">
-              <td colspan="6" class="py-3">{{ results.length }} Villager<span ng-if="results.length>1">s</span> found</td>
+              <td colspan="5" class="py-3">{{ results.length }} Villager<span ng-if="results.length>1">s</span> found</td>
             </tr>
             <tr ng-if="results.length == 0 && villagersloaded">
-              <td colspan="6" class="py-3">
+              <td colspan="5" class="py-3">
                 <div class="text-danger h5 font-weight-bold"><i class="far fa-frown mr-1"></i> No Villagers found</div>
                 <div>There aren't any Villagers that match your filters &amp; search.</div>
               </td>

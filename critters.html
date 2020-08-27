@@ -107,22 +107,24 @@
               </th>
               <th class="text-nowrap">Times Available</th>
               <th class="text-nowrap">Months Available</th>
-              <!-- <th class="text-nowrap">Rarity</th> -->
             </tr>
           </thead>
           <tbody>
             <tr ng-if="!crittersloaded">
-              <td colspan="4" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data...</td>
+              <td colspan="6" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data...</td>
             </tr>
             <tr ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}" ng-if="crittersloaded" ng-repeat="(key, value) in results = (critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | bymonth:availmonth:hemisphere)">
-              <td class="align-middle text-capitalize text-nowrap">
-                <img ng-src="{{value.icon_uri}}" class="img-fluid" style="height: 30px;" alt="" />
-                <span class="ml-2">{{ value.displayname }}</span>
+              <td class="align-middle">
+                <div class="d-flex justify-content-start align-items-center">
+                  <div>
+                    <img ng-src="{{value.icon_uri}}" style="height: 30px; width: 30px;" alt="" />
+                  </div>
+                  <div class="ml-2 text-capitalize">{{ value.displayname }}</div>
+                </div>
               </td>
               <td class="align-middle text-nowrap">{{ value.price | currency:'':0 }}</td>
               <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='bugs'">{{ value.availability.location }}</td>
               <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='sea'">{{ value.shadow }}</td>
-              <!-- <td class="align-middle">{{ value.availability.rarity }}</td> -->
               <td class="align-middle text-nowrap">
                 <div ng-if="value.availability.time">{{ value.availability.time }}</div>
                 <div ng-if="!value.availability.time">All times</div>
