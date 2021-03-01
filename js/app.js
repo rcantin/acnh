@@ -2,61 +2,36 @@ var myApp = angular.module("myApp", ["angular-toArrayFilter"]);
 
 myApp.factory("serviceSessionStorage", [
   "$rootScope",
-  function($rootScope) {
+  function ($rootScope) {
     return {
-      get: function(key) {
+      get: function (key) {
         return JSON.parse(window.sessionStorage.getItem(key));
       },
-      set: function(key, data) {
+      set: function (key, data) {
         window.sessionStorage.setItem(key, JSON.stringify(data));
-      }
+      },
     };
-  }
+  },
 ]);
 
 myApp.factory("serviceLocalStorage", [
   "$rootScope",
-  function($rootScope) {
+  function ($rootScope) {
     return {
-      get: function(key) {
+      get: function (key) {
         return JSON.parse(window.localStorage.getItem(key));
       },
-      set: function(key, data) {
+      set: function (key, data) {
         window.localStorage.setItem(key, JSON.stringify(data));
-      }
+      },
     };
-  }
+  },
 ]);
 
-// myApp.service("dataService", function($http) {
-//   delete $http.defaults.headers.common["X-Requested-With"];
-//   this.getCritterData = function(callbackFunc, type) {
-//     let url = "../data/" + type + ".json";
-//     $http.get(url).then(function(data) {
-//       callbackFunc(data);
-//     });
-//   };
-//   this.getFishData = function(callbackFunc) {
-//     $http.get("../data/fish.json").then(function(data) {
-//       callbackFunc(data);
-//     });
-//   };
-//   this.getSeaData = function(callbackFunc) {
-//     $http.get("../data/sea.json").then(function(data) {
-//       callbackFunc(data);
-//     });
-//   };
-//   this.getBugData = function(callbackFunc) {
-//     $http.get("../data/bug.json").then(function(data) {
-//       callbackFunc(data);
-//     });
-//   };
-// });
-
-myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, serviceSessionStorage) {
+myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, serviceSessionStorage) {
   $scope.today = new Date();
 
-  $scope.initCritters = function() {
+  $scope.initCritters = function () {
     $scope.orderByField = "price";
     $scope.reverseSort = true;
     $scope.searchtext = "";
@@ -67,7 +42,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     $scope.getCritterData($scope.crittertype);
   };
 
-  $scope.initVillagers = function() {
+  $scope.initVillagers = function () {
     $scope.orderByField = "displayname";
     $scope.reverseSort = false;
     $scope.villagername = "";
@@ -78,7 +53,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     $scope.getVillagerData();
   };
 
-  $scope.initFossils = function() {
+  $scope.initFossils = function () {
     $scope.orderByField = "displayname";
     $scope.reverseSort = false;
     $scope.fossilname = "";
@@ -86,20 +61,20 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     $scope.getFossilData();
   };
 
-  $scope.initArt = function() {
+  $scope.initArt = function () {
     $scope.orderByField = "displayname";
     $scope.reverseSort = false;
     $scope.artname = "";
     $scope.getArtData();
   };
 
-  $scope.getCritterData = function(crittertype) {
+  $scope.getCritterData = function (crittertype) {
     $scope.crittersloaded = false;
     $scope.critters = [];
     console.log("Getting critter data from ACNHAPI...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/" + crittertype
+      url: "https://acnhapi.com/v1/" + crittertype,
     }).then(
       function successCallback(response) {
         critterdata = response.data;
@@ -109,6 +84,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
           item[1].displayname = names["name-USen"];
         }
         $scope.critters = critterdata;
+        console.log(critterdata);
         $scope.crittersloaded = true;
       },
       function errorCallback(response) {
@@ -117,13 +93,13 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     );
   };
 
-  $scope.getVillagerData = function() {
+  $scope.getVillagerData = function () {
     $scope.villagersloaded = false;
     $scope.villagers = [];
     console.log("Getting villager data from ACNHAPI...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/villagers"
+      url: "https://acnhapi.com/v1/villagers",
     }).then(
       function successCallback(response) {
         villagerdata = response.data;
@@ -142,13 +118,13 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     );
   };
 
-  $scope.getFossilData = function() {
+  $scope.getFossilData = function () {
     $scope.fossilsloaded = false;
     $scope.fossils = [];
     console.log("Getting fossil data from ACNHAPI...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/fossils"
+      url: "https://acnhapi.com/v1/fossils",
     }).then(
       function successCallback(response) {
         fossildata = response.data;
@@ -167,13 +143,13 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     );
   };
 
-  $scope.getArtData = function() {
+  $scope.getArtData = function () {
     $scope.artloaded = false;
     $scope.art = [];
     console.log("Getting art data from ACNHAPI...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/art"
+      url: "https://acnhapi.com/v1/art",
     }).then(
       function successCallback(response) {
         artdata = response.data;
@@ -193,7 +169,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     );
   };
 
-  $scope.buildVillagerDropdowns = function() {
+  $scope.buildVillagerDropdowns = function () {
     var data = $scope.villagers;
     var allgenders = [];
     var allhobbies = [];
@@ -219,7 +195,7 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     $scope.species = uniquespecies;
   };
 
-  $scope.buildFossilDropdowns = function() {
+  $scope.buildFossilDropdowns = function () {
     var data = $scope.fossils;
     var allgroups = [];
     const items = Object.entries(data);
@@ -232,10 +208,26 @@ myApp.controller("MainCtrl", function($scope, $http, serviceLocalStorage, servic
     const uniquegroups = allgroups.filter(unique);
     $scope.groups = uniquegroups;
   };
+
+  // -------------------------------
+  // -------------------------------
+
+  $scope.selection = serviceLocalStorage.get("selectedcritters");
+  $scope.toggleSelection = function toggleSelection(CritterID) {
+    var idx = $scope.selection.indexOf(CritterID);
+    if (idx > -1) {
+      $scope.selection.splice(idx, 1);
+    } else {
+      $scope.selection.push(CritterID);
+    }
+    serviceLocalStorage.set("selectedcritters", $scope.selection);
+  };
+  // -------------------------------
+  // -------------------------------
 });
 
-myApp.filter("search", function() {
-  return function(rows, lookuptype, searchtext) {
+myApp.filter("search", function () {
+  return function (rows, lookuptype, searchtext) {
     var expected = ("" + searchtext).toLowerCase();
     var result = [];
     if (!lookuptype) {
@@ -272,8 +264,8 @@ myApp.filter("search", function() {
   };
 });
 
-myApp.filter("bymonth", function() {
-  return function(rows, availmonth, hemisphere) {
+myApp.filter("bymonth", function () {
+  return function (rows, availmonth, hemisphere) {
     var result = [];
     for (var i = 0; i < rows.length; i++) {
       if (availmonth == "all") {
@@ -300,8 +292,8 @@ myApp.filter("bymonth", function() {
   };
 });
 
-myApp.filter("trait", function() {
-  return function(rows, filteron, selected) {
+myApp.filter("trait", function () {
+  return function (rows, filteron, selected) {
     // console.log(filteron, selected);
     var result = [];
     for (var i = 0; i < rows.length; i++) {

@@ -17,8 +17,8 @@ a {
 }
 
 a[aria-expanded="true"] > .expanded-indicator {
-  -webkit-transform: rotate(315deg);
-          transform: rotate(315deg);
+  -webkit-transform: rotate(180deg);
+          transform: rotate(180deg);
   -webkit-transition: -webkit-transform 200ms ease;
   transition: -webkit-transform 200ms ease;
   transition: transform 200ms ease;
@@ -32,6 +32,623 @@ a[aria-expanded="false"] > .expanded-indicator {
   transition: -webkit-transform 200ms ease;
   transition: transform 200ms ease;
   transition: transform 200ms ease, -webkit-transform 200ms ease;
+}
+
+.fancy-checkbox {
+  cursor: pointer;
+}
+
+.fancy-checkbox label {
+  cursor: pointer;
+}
+
+.fancy-checkbox .checked {
+  display: none;
+}
+
+.fancy-checkbox input[type="radio"],
+.fancy-checkbox input[type="checkbox"] {
+  display: none;
+  position: absolute;
+  opacity: 0;
+  height: 0;
+  width: 0;
+}
+
+.fancy-checkbox input[type="radio"]:checked + * .checked,
+.fancy-checkbox input[type="checkbox"]:checked + * .checked {
+  display: inherit;
+}
+
+.fancy-checkbox input[type="radio"]:checked + * .unchecked,
+.fancy-checkbox input[type="checkbox"]:checked + * .unchecked {
+  display: none;
+}
+
+.icon-note {
+  position: absolute;
+  -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+          box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.icon.general.nookleaf {
+  width: 128px;
+  height: 128px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 2798px 3197px;
+  background-position-x: -5px;
+  background-position-y: -5px;
+}
+
+.icon.tool.ladder {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -601px;
+  background-position-y: -2.5px;
+}
+
+.icon.tree.orange {
+  width: 128px;
+  height: 128px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 2798px 3197px;
+  background-position-x: -2000px;
+  background-position-y: -1202px;
+}
+
+.icon.fish.napoleonfish {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1000px;
+  background-position-y: -1133px;
+}
+
+.icon.flower.windflower.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1000px;
+  background-position-y: -667.5px;
+}
+
+.icon.flower.windflower.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1066.5px;
+  background-position-y: -667.5px;
+}
+
+.icon.flower.windflower.orange {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1133px;
+  background-position-y: -667.5px;
+}
+
+.icon.flower.windflower.pink {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1199.5px;
+  background-position-y: -667.5px;
+}
+
+.icon.flower.windflower.purple {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1266px;
+  background-position-y: -667.5px;
+}
+
+.icon.flower.windflower.blue {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1332.5px;
+  background-position-y: -667.5px;
+}
+
+.icon.flower.cosmo.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -2.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.cosmo.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -69px;
+  background-position-y: -734px;
+}
+
+.icon.flower.cosmo.yellow {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -135.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.cosmo.pink {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -202px;
+  background-position-y: -734px;
+}
+
+.icon.flower.cosmo.orange {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -268.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.cosmo.black {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -335px;
+  background-position-y: -734px;
+}
+
+.icon.flower.hyacinth.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -468px;
+  background-position-y: -734px;
+}
+
+.icon.flower.hyacinth.yellow {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -534.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.hyacinth.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -601px;
+  background-position-y: -734px;
+}
+
+.icon.flower.hyacinth.orange {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -667.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.hyacinth.pink {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -734px;
+  background-position-y: -734px;
+}
+
+.icon.flower.hyacinth.purple {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -800.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.hyacinth.blue {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -867px;
+  background-position-y: -734px;
+}
+
+.icon.flower.mum.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -933.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.mum.yellow {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1000px;
+  background-position-y: -734px;
+}
+
+.icon.flower.mum.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1066.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.mum.pink {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1133px;
+  background-position-y: -734px;
+}
+
+.icon.flower.mum.green {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1199.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.mum.purple {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1266px;
+  background-position-y: -734px;
+}
+
+.icon.flower.pansy.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1332.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.pansy.yellow {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -2.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.pansy.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -69px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.pansy.purple {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -135.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.pansy.orange {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -202px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.pansy.blue {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -268.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -335px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -401.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.yellow {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -468px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.pink {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -534.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.orange {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -601px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.purple {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -667.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.black {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -734px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.blue {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -800.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.rose.gold {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -401.5px;
+  background-position-y: -734px;
+}
+
+.icon.flower.tulip.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -933.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.tulip.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1000px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.tulip.yellow {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1066.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.tulip.pink {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1133px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.tulip.purple {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1199.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.tulip.black {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1266px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.tulip.orange {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -1332.5px;
+  background-position-y: -800.5px;
+}
+
+.icon.flower.lily.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -2.5px;
+  background-position-y: -867px;
+}
+
+.icon.flower.lily.yellow {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -69px;
+  background-position-y: -867px;
+}
+
+.icon.flower.lily.red {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -135.5px;
+  background-position-y: -867px;
+}
+
+.icon.flower.lily.orange {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -202px;
+  background-position-y: -867px;
+}
+
+.icon.flower.lily.pink {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -268.5px;
+  background-position-y: -867px;
+}
+
+.icon.flower.lily.black {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -335px;
+  background-position-y: -867px;
+}
+
+.icon.flower.jacobsladder.white {
+  width: 64px;
+  height: 64px;
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+  background-size: 1399px 1598.5px;
+  background-position-x: -867px;
+  background-position-y: -800.5px;
 }
 
 /*!
@@ -92,7 +709,7 @@ article, aside, figcaption, figure, footer, header, hgroup, main, nav, section {
 body {
   margin: 0;
   font-family: "Quicksand", Arial, sans-serif;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
   color: #212529;
@@ -405,31 +1022,31 @@ h1, h2, h3, h4, h5, h6,
 }
 
 h1, .h1 {
-  font-size: 2rem;
+  font-size: 2.25rem;
 }
 
 h2, .h2 {
-  font-size: 1.6rem;
+  font-size: 1.8rem;
 }
 
 h3, .h3 {
-  font-size: 1.4rem;
+  font-size: 1.575rem;
 }
 
 h4, .h4 {
-  font-size: 1.2rem;
+  font-size: 1.35rem;
 }
 
 h5, .h5 {
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 h6, .h6 {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 
 .lead {
-  font-size: 1rem;
+  font-size: 1.125rem;
   font-weight: 300;
 }
 
@@ -501,7 +1118,7 @@ mark,
 
 .blockquote {
   margin-bottom: 1rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 .blockquote-footer {
@@ -2043,7 +2660,7 @@ pre code {
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
@@ -2125,14 +2742,14 @@ select.form-control:focus::-ms-value {
 .col-form-label-lg {
   padding-top: calc(0.5rem + 1px);
   padding-bottom: calc(0.5rem + 1px);
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.5;
 }
 
 .col-form-label-sm {
   padding-top: calc(0.25rem + 1px);
   padding-bottom: calc(0.25rem + 1px);
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   line-height: 1.5;
 }
 
@@ -2157,7 +2774,7 @@ select.form-control:focus::-ms-value {
 .form-control-sm {
   height: calc(1.5em + 0.5rem + 2px);
   padding: 0.25rem 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -2165,7 +2782,7 @@ select.form-control:focus::-ms-value {
 .form-control-lg {
   height: calc(1.5em + 1rem + 2px);
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -2257,7 +2874,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   line-height: 1.5;
   color: #ffffff;
   background-color: rgba(51, 204, 51, 0.9);
@@ -2384,7 +3001,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: .1rem;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   line-height: 1.5;
   color: #ffffff;
   background-color: rgba(204, 51, 51, 0.9);
@@ -2600,7 +3217,7 @@ textarea.form-control {
   background-color: transparent;
   border: 1px solid transparent;
   padding: 0.375rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   line-height: 1.5;
   border-radius: 0.25rem;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
@@ -3220,14 +3837,14 @@ fieldset:disabled a.btn {
 
 .btn-lg, .btn-group-lg > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -3318,7 +3935,7 @@ input[type="button"].btn-block {
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   color: #212529;
   text-align: left;
   list-style: none;
@@ -3519,7 +4136,7 @@ input[type="button"].btn-block {
   display: block;
   padding: 0.5rem 1.5rem;
   margin-bottom: 0;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   color: #6c757d;
   white-space: nowrap;
 }
@@ -3793,7 +4410,7 @@ input[type="button"].btn-block {
           align-items: center;
   padding: 0.375rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
@@ -3821,7 +4438,7 @@ input[type="button"].btn-block {
 .input-group-lg > .input-group-prepend > .btn,
 .input-group-lg > .input-group-append > .btn {
   padding: 0.5rem 1rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.5;
   border-radius: 0.3rem;
 }
@@ -3838,7 +4455,7 @@ input[type="button"].btn-block {
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
   padding: 0.25rem 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   line-height: 1.5;
   border-radius: 0.2rem;
 }
@@ -3871,7 +4488,7 @@ input[type="button"].btn-block {
 .custom-control {
   position: relative;
   display: block;
-  min-height: 1.2rem;
+  min-height: 1.35rem;
   padding-left: 1.5rem;
 }
 
@@ -3925,7 +4542,7 @@ input[type="button"].btn-block {
 
 .custom-control-label::before {
   position: absolute;
-  top: 0.1rem;
+  top: 0.175rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -3938,7 +4555,7 @@ input[type="button"].btn-block {
 
 .custom-control-label::after {
   position: absolute;
-  top: 0.1rem;
+  top: 0.175rem;
   left: -1.5rem;
   display: block;
   width: 1rem;
@@ -3996,7 +4613,7 @@ input[type="button"].btn-block {
 }
 
 .custom-switch .custom-control-label::after {
-  top: calc(0.1rem + 2px);
+  top: calc(0.175rem + 2px);
   left: calc(-2.25rem + 2px);
   width: calc(1rem - 4px);
   height: calc(1rem - 4px);
@@ -4030,7 +4647,7 @@ input[type="button"].btn-block {
   width: 100%;
   height: calc(1.5em + 0.75rem + 2px);
   padding: 0.375rem 1.75rem 0.375rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
@@ -4076,7 +4693,7 @@ input[type="button"].btn-block {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
   padding-left: 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
 }
 
 .custom-select-lg {
@@ -4084,7 +4701,7 @@ input[type="button"].btn-block {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   padding-left: 1rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
 }
 
 .custom-file {
@@ -4473,10 +5090,10 @@ input[type="button"].btn-block {
 
 .navbar-brand {
   display: inline-block;
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
+  padding-top: 0.33125rem;
+  padding-bottom: 0.33125rem;
   margin-right: 1rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: inherit;
   white-space: nowrap;
 }
@@ -4527,7 +5144,7 @@ input[type="button"].btn-block {
 
 .navbar-toggler {
   padding: 0.25rem 0.75rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1;
   background-color: transparent;
   border: 1px solid transparent;
@@ -5252,7 +5869,7 @@ input[type="button"].btn-block {
 
 .pagination-lg .page-link {
   padding: 0.75rem 1.5rem;
-  font-size: 1rem;
+  font-size: 1.125rem;
   line-height: 1.5;
 }
 
@@ -5268,7 +5885,7 @@ input[type="button"].btn-block {
 
 .pagination-sm .page-link {
   padding: 0.25rem 0.5rem;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   line-height: 1.5;
 }
 
@@ -5488,7 +6105,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .alert-dismissible {
-  padding-right: 3.7rem;
+  padding-right: 3.85rem;
 }
 
 .alert-dismissible .close {
@@ -5635,7 +6252,7 @@ a.badge-dark:focus, a.badge-dark.focus {
   display: flex;
   height: 1rem;
   overflow: hidden;
-  font-size: 0.6rem;
+  font-size: 0.675rem;
   background-color: #e9ecef;
   border-radius: 0.25rem;
 }
@@ -6031,7 +6648,7 @@ a.badge-dark:focus, a.badge-dark.focus {
 
 .close {
   float: right;
-  font-size: 1.2rem;
+  font-size: 1.35rem;
   font-weight: 700;
   line-height: 1;
   color: #000;
@@ -6373,7 +6990,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   word-wrap: break-word;
   opacity: 0;
 }
@@ -6486,7 +7103,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.7rem;
+  font-size: 0.7875rem;
   word-wrap: break-word;
   background-color: #ffffff;
   background-clip: padding-box;
@@ -6610,7 +7227,7 @@ a.close.disabled {
 .popover-header {
   padding: 0.5rem 0.75rem;
   margin-bottom: 0;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
   border-top-left-radius: calc(0.3rem - 1px);

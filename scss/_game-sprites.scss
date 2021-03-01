@@ -1,0 +1,270 @@
+@mixin icon($col, $row, $dispratio) {
+  $spritecols: 21;
+  $spriterows: 24;
+
+  $guttersize: 5 * $dispratio;
+  $spritesize: 128 * $dispratio;
+
+  width: #{$spritesize}px;
+  height: #{$spritesize}px;
+
+  background-image: url(../img/game-sprites.png);
+  background-repeat: no-repeat;
+
+  // number of sprites in page - 21 across / 24 down
+  // there is a 5px border around each sprite as well as 5px around the whole image (gutter)
+  $pagewidth: ($spritecols * $spritesize) + ($spritecols * $guttersize) + $guttersize;
+  $pageheight: ($spriterows * $spritesize) + ($spriterows * $guttersize) + $guttersize;
+
+  background-size: #{$pagewidth}px #{$pageheight}px;
+
+  // pixel value of all gutters x/y to add to sprite sizes
+  $totalgutterwidth: ($guttersize * $col) + $guttersize;
+  $totalgutterheight: ($guttersize * $row) + $guttersize;
+
+  background-position-x: -#{($spritesize * $col) + $totalgutterwidth}px;
+  background-position-y: -#{($spritesize * $row) + $totalgutterheight}px;
+  // background-position-x: -#{(($spritesize * $col) + ($guttersize * $col) + $guttersize)}px;
+  // background-position-y: -#{(($spritesize * $row) + ($guttersize * $row) + $guttersize)}px;
+}
+
+.icon-note {
+  position: absolute;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.icon {
+  &.general {
+    &.nookleaf {
+      @include icon(0, 0, 1);
+    }
+  }
+  &.tool {
+    &.ladder {
+      @include icon(9, 0, 0.5);
+    }
+  }
+  &.tree {
+    &.orange {
+      @include icon(15, 9, 1);
+    }
+  }
+  &.fish {
+    &.napoleonfish {
+      @include icon(15, 17, 0.5);
+    }
+  }
+  &.flower {
+    &.windflower {
+      &.white {
+        @include icon(15, 10, 0.5);
+      }
+      &.red {
+        @include icon(16, 10, 0.5);
+      }
+      &.orange {
+        @include icon(17, 10, 0.5);
+      }
+      &.pink {
+        @include icon(18, 10, 0.5);
+      }
+      &.purple {
+        @include icon(19, 10, 0.5);
+      }
+      &.blue {
+        @include icon(20, 10, 0.5);
+      }
+    }
+    &.cosmo {
+      &.white {
+        @include icon(0, 11, 0.5);
+      }
+      &.red {
+        @include icon(1, 11, 0.5);
+      }
+      &.yellow {
+        @include icon(2, 11, 0.5);
+      }
+      &.pink {
+        @include icon(3, 11, 0.5);
+      }
+      &.orange {
+        @include icon(4, 11, 0.5);
+      }
+      &.black {
+        @include icon(5, 11, 0.5);
+      }
+    }
+    &.hyacinth {
+      &.white {
+        @include icon(7, 11, 0.5);
+      }
+      &.yellow {
+        @include icon(8, 11, 0.5);
+      }
+      &.red {
+        @include icon(9, 11, 0.5);
+      }
+      &.orange {
+        @include icon(10, 11, 0.5);
+      }
+      &.pink {
+        @include icon(11, 11, 0.5);
+      }
+      &.purple {
+        @include icon(12, 11, 0.5);
+      }
+      &.blue {
+        @include icon(13, 11, 0.5);
+      }
+    }
+    &.mum {
+      &.white {
+        @include icon(14, 11, 0.5);
+      }
+      &.yellow {
+        @include icon(15, 11, 0.5);
+      }
+      &.red {
+        @include icon(16, 11, 0.5);
+      }
+      &.pink {
+        @include icon(17, 11, 0.5);
+      }
+      &.green {
+        @include icon(18, 11, 0.5);
+      }
+      &.purple {
+        @include icon(19, 11, 0.5);
+      }
+    }
+    &.pansy {
+      &.white {
+        @include icon(20, 11, 0.5);
+      }
+      &.yellow {
+        @include icon(0, 12, 0.5);
+      }
+      &.red {
+        @include icon(1, 12, 0.5);
+      }
+      &.purple {
+        @include icon(2, 12, 0.5);
+      }
+      &.orange {
+        @include icon(3, 12, 0.5);
+      }
+      &.blue {
+        @include icon(4, 12, 0.5);
+      }
+    }
+    &.rose {
+      &.red {
+        @include icon(5, 12, 0.5);
+      }
+      &.white {
+        @include icon(6, 12, 0.5);
+      }
+      &.yellow {
+        @include icon(7, 12, 0.5);
+      }
+      &.pink {
+        @include icon(8, 12, 0.5);
+      }
+      &.orange {
+        @include icon(9, 12, 0.5);
+      }
+      &.purple {
+        @include icon(10, 12, 0.5);
+      }
+      &.black {
+        @include icon(11, 12, 0.5);
+      }
+      &.blue {
+        @include icon(12, 12, 0.5);
+      }
+      &.gold {
+        @include icon(6, 11, 0.5);
+      }
+    }
+    &.tulip {
+      &.red {
+        @include icon(14, 12, 0.5);
+      }
+      &.white {
+        @include icon(15, 12, 0.5);
+      }
+      &.yellow {
+        @include icon(16, 12, 0.5);
+      }
+      &.pink {
+        @include icon(17, 12, 0.5);
+      }
+      &.purple {
+        @include icon(18, 12, 0.5);
+      }
+      &.black {
+        @include icon(19, 12, 0.5);
+      }
+      &.orange {
+        @include icon(20, 12, 0.5);
+      }
+    }
+    &.lily {
+      &.white {
+        @include icon(0, 13, 0.5);
+      }
+      &.yellow {
+        @include icon(1, 13, 0.5);
+      }
+      &.red {
+        @include icon(2, 13, 0.5);
+      }
+      &.orange {
+        @include icon(3, 13, 0.5);
+      }
+      &.pink {
+        @include icon(4, 13, 0.5);
+      }
+      &.black {
+        @include icon(5, 13, 0.5);
+      }
+    }
+    &.jacobsladder {
+      &.white {
+        @include icon(13, 12, 0.5);
+      }
+    }
+  }
+}
+
+// .sprite {
+//   background-image: url("../img/game-sprites.png");
+//   background-repeat: no-repeat;
+//   width: 128px;
+//   height: 128px;
+
+//   &.flower {
+//     height: 128px;
+//     &.windflower {
+//       &.white {
+//         background-position: -2000px -1335px;
+//       }
+//       &.red {
+//         background-position: -2133px -1335px;
+//       }
+//       &.orange {
+//         background-position: -2266px -1335px;
+//       }
+//       &.pink {
+//         background-position: -2399px -1335px;
+//       }
+//       &.purple {
+//         background-position: -2532px -1335px;
+//       }
+//       &.blue {
+//         background-position: -2665px -1335px;
+//       }
+//     }
+//   }
+// }

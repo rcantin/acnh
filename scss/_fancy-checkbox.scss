@@ -1,0 +1,28 @@
+.fancy-checkbox {
+  cursor: pointer;
+  label {
+    cursor: pointer;
+  }
+
+  .checked {
+    display: none;
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    display: none;
+    position: absolute;
+    opacity: 0;
+    height: 0;
+    width: 0;
+
+    &:checked + * {
+      .checked {
+        display: inherit;
+      }
+      .unchecked {
+        display: none;
+      }
+    }
+  }
+}

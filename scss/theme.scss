@@ -1,10 +1,7 @@
-// @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,700");
 @import url("https://fonts.googleapis.com/css?family=Quicksand:300,400,700&display=swap");
-// @import url("https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@300;400;600&family=Barlow:wght@300;400;700&display=swap");
 
-$font-size-base: 0.8rem;
+$font-size-base: 0.9rem;
 $font-family-sans-serif: "Quicksand", Arial, sans-serif;
-// $headings-font-weight: 300;
 
 $label-margin-bottom: 0.25rem;
 
@@ -42,13 +39,16 @@ $navbar-dark-disabled-color: rgba($white, 0.5);
 $navbar-dark-toggler-border-color: transparent;
 
 a[aria-expanded="true"] > .expanded-indicator {
-  transform: rotate(315deg);
+  transform: rotate(180deg);
   transition: transform 200ms ease;
 }
 a[aria-expanded="false"] > .expanded-indicator {
   transform: rotate(360deg);
   transition: transform 200ms ease;
 }
+
+@import "./fancy-checkbox";
+@import "./game-sprites";
 
 // import all bootstrap variables (values from above will overwrite defaults)
 @import "../node_modules/bootstrap/scss/functions";
