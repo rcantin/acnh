@@ -32,8 +32,8 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   $scope.today = new Date();
 
   $scope.initCritters = function () {
-    $scope.orderByField = "price";
-    $scope.reverseSort = true;
+    $scope.orderByField = "name";
+    $scope.reverseSort = false;
     $scope.searchtext = "";
     $scope.lookuptype = "filter";
     $scope.crittertype = "fish";
@@ -74,15 +74,19 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
     console.log("Getting critter data from ACNHAPI...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/" + crittertype,
+      url: "https://api.nookipedia.com/nh/" + crittertype,
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': "46688072-b98a-4b62-8856-b8171007fa96"
+      },
     }).then(
       function successCallback(response) {
         critterdata = response.data;
-        const items = Object.entries(critterdata);
-        for (const item of items) {
-          var names = item[1].name;
-          item[1].displayname = names["name-USen"];
-        }
+        // const items = Object.entries(critterdata);
+        // for (const item of items) {
+        //   var names = item[1].name;
+        //   item[1].displayname = names["name-USen"];
+        // }
         $scope.critters = critterdata;
         console.log(critterdata);
         $scope.crittersloaded = true;
@@ -232,7 +236,7 @@ myApp.filter("search", function () {
     var result = [];
     if (!lookuptype) {
       for (var i = 0; i < rows.length; i++) {
-        var actual = ("" + rows[i].displayname).toLowerCase();
+        var actual = ("" + rows[i].name).toLowerCase();
         if (actual.indexOf(expected) !== -1) {
           result.push(rows[i]);
         }
@@ -241,7 +245,7 @@ myApp.filter("search", function () {
     if (lookuptype == "filter") {
       for (var i = 0; i < rows.length; i++) {
         rows[i].highlight = false;
-        var actual = ("" + rows[i].displayname).toLowerCase();
+        var actual = ("" + rows[i].name).toLowerCase();
         if (actual.indexOf(expected) !== -1) {
           result.push(rows[i]);
         }
@@ -251,7 +255,7 @@ myApp.filter("search", function () {
       for (var i = 0; i < rows.length; i++) {
         rows[i].highlight = false;
         if (searchtext) {
-          var actual = ("" + rows[i].displayname).toLowerCase();
+          var actual = ("" + rows[i].name).toLowerCase();
           if (actual.indexOf(expected) !== -1) {
             rows[i].highlight = true;
           }
