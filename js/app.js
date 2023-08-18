@@ -71,7 +71,7 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   $scope.getCritterData = function (crittertype) {
     $scope.crittersloaded = false;
     $scope.critters = [];
-    console.log("Getting critter data from ACNHAPI...");
+    console.log("Getting critter data from Nookipedia...");
     $http({
       method: "GET",
       url: "https://api.nookipedia.com/nh/" + crittertype,
