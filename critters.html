@@ -111,7 +111,7 @@
           </thead>
           <tbody>
             <tr ng-if="!crittersloaded">
-              <td colspan="6" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data...</td>
+              <td colspan="6" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Critter data from Nookipedia...</td>
             </tr>
             <tr ng-class="{'bg-secondary' : value.highlight, 'font-weight-bold' : value.highlight}" ng-if="crittersloaded" ng-repeat="(key, value) in results = (critters | toArray | orderBy:orderByField:reverseSort | search:lookuptype:searchtext | bymonth:availmonth:hemisphere)">
               <td class="align-middle">
