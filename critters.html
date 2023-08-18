@@ -70,43 +70,43 @@
           <thead>
             <tr>
               <th>
-                <a href="#" ng-click="orderByField='displayname'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort" class="text-nowrap"
                   >Critter
-                  <span ng-show="orderByField == 'displayname'">
+                  <span ng-show="orderByField == 'name'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
                 </a>
               </th>
               <th>
-                <a href="#" ng-click="orderByField='price'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='sell_nook'; reverseSort = !reverseSort" class="text-nowrap"
                   >Price
-                  <span ng-show="orderByField == 'price'">
+                  <span ng-show="orderByField == 'sell_nook'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                   </span>
                 </a>
               </th>
               <th ng-if="crittertype=='fish' || crittertype=='bugs'">
-                <a href="#" ng-click="orderByField='availability.location'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='location'; reverseSort = !reverseSort" class="text-nowrap"
                   >Location
-                  <span ng-show="orderByField == 'availability.location'">
+                  <span ng-show="orderByField == 'location'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                   </span>
                 </a>
               </th>
               <th ng-if="crittertype=='fish' || crittertype=='sea'">
-                <a href="#" ng-click="orderByField='shadow'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='shadow_size'; reverseSort = !reverseSort" class="text-nowrap"
                   >Shadow
-                  <span ng-show="orderByField == 'shadow'">
+                  <span ng-show="orderByField == 'shadow_size'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                   </span>
                 </a>
               </th>
-              <th class="text-nowrap">Times Available</th>
-              <th class="text-nowrap">Months Available</th>
+              <!-- <th class="text-nowrap">Availability</th> -->
+              <!-- <th class="text-nowrap">Months Available</th> -->
             </tr>
           </thead>
           <tbody>
@@ -117,19 +117,17 @@
               <td class="align-middle">
                 <div class="d-flex justify-content-start align-items-center">
                   <div>
-                    <img ng-src="{{value.icon_uri}}" style="height: 30px; width: 30px;" alt="" />
+                    <img ng-src="{{value.render_url}}" style="height: 30px; width: 30px;" alt="" />
                   </div>
-                  <div class="ml-2 text-capitalize">{{ value.displayname }}</div>
+                  <div class="ml-2 text-capitalize">{{ value.name }}</div>
                 </div>
               </td>
-              <td class="align-middle text-nowrap">{{ value.price | currency:'':0 }}</td>
-              <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='bugs'">{{ value.availability.location }}</td>
-              <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='sea'">{{ value.shadow }}</td>
-              <td class="align-middle text-nowrap">
-                <div ng-if="value.availability.time">{{ value.availability.time }}</div>
-                <div ng-if="!value.availability.time">All times</div>
-              </td>
-              <td class="align-middle text-nowrap">
+              <td class="align-middle text-nowrap">{{ value.sell_nook | currency:'':0 }}</td>
+              <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='bugs'">{{ value.location }}</td>
+              <td class="align-middle text-nowrap" ng-if="crittertype=='fish' || crittertype=='sea'">{{ value.shadow_size }}</td>
+              <!-- <td class="align-middle text-nowrap">{{ value.north.times_by_month }}</td> -->
+              <!-- <td class="align-middle text-nowrap">{{ value.north.months }}</td> -->
+              <!-- <td class="align-middle text-nowrap" colspan="2">
                 <div class="d-flex justify-content-start align-items-center small">
                   <div
                     ng-if="hemisphere=='northern'"
@@ -148,7 +146,7 @@
                     {{ month.initial }}
                   </div>
                 </div>
-              </td>
+              </td> -->
             </tr>
             <tr ng-if="results.length > 0 && crittersloaded">
               <td colspan="6" class="py-3">{{ results.length }} Critter<span ng-if="results.length>1">s</span> found</td>
