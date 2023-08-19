@@ -141,13 +141,9 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
     }).then(
       function successCallback(response) {
         fossildata = response.data;
-        const items = Object.entries(fossildata);
-        for (const item of items) {
-          var names = item[1].name;
-          item[1].displayname = names["name-USen"];
-        }
         $scope.fossils = fossildata;
         $scope.buildFossilDropdowns();
+        console.log(fossildata);
         $scope.fossilsloaded = true;
       },
       function errorCallback(response) {
@@ -170,11 +166,6 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
     }).then(
       function successCallback(response) {
         artdata = response.data;
-        const items = Object.entries(artdata);
-        for (const item of items) {
-          var names = item[1].name;
-          item[1].displayname = names["name-USen"];
-        }
         $scope.art = artdata;
         console.log(artdata);
         // $scope.buildArtDropdowns();
@@ -217,7 +208,7 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
     var allgroups = [];
     const items = Object.entries(data);
     for (const item of items) {
-      allgroups.push(item[1]["part-of"]);
+      allgroups.push(item[1]["fossil_group"]);
     }
     const unique = (value, index, self) => {
       return self.indexOf(value) === index;
