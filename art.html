@@ -25,28 +25,29 @@
         <table class="table table-hover table-sm table-md-responsive" style="min-width: 600px;">
           <tbody>
             <tr class="bg-light">
-              <td>
-                <input type="artsearch" class="form-control" ng-model="artname" placeholder="Search..." />
+              <td colspan="2">
+                <input type="search" class="form-control" ng-model="artname" placeholder="Search..." />
               </td>
+              <td></td>
               <td></td>
               <td></td>
             </tr>
           </tbody>
           <thead>
             <tr>
-              <th>
-                <a href="#" ng-click="orderByField='displayname'; reverseSort = !reverseSort" class="text-nowrap"
+              <th colspan="2">
+                <a href="#" ng-click="orderByField='art_name'; reverseSort = !reverseSort" class="text-nowrap"
                   >Artwork
-                  <span ng-show="orderByField == 'displayname'">
+                  <span ng-show="orderByField == 'art_name'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
                 </a>
               </th>
               <th>
-                <a href="#" ng-click="orderByField='hasFake'; reverseSort = !reverseSort" class="text-nowrap"
+                <a href="#" ng-click="orderByField='has_fake'; reverseSort = !reverseSort" class="text-nowrap"
                   >Has Fake
-                  <span ng-show="orderByField == 'hasFake'">
+                  <span ng-show="orderByField == 'has_fake'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
@@ -61,6 +62,7 @@
                   </span>
                 </a>
               </th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -68,19 +70,17 @@
               <td colspan="3" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting art data...</td>
             </tr>
             <tr ng-if="artloaded" ng-repeat="(key, value) in results = (art | toArray | search:'':artname | orderBy:orderByField:reverseSort)">
-              <td class="align-middle">
-                <div class="d-flex justify-content-start align-items-center">
-                  <div>
-                    <img ng-src="{{value.image_uri}}" style="height: 45px; width: 45px;" alt="" />
-                  </div>
-                  <div class="ml-2 text-capitalize">{{ value.displayname }}</div>
-                </div>
+              <td class="align-middle"><img ng-src="{{value.real_info.image_url}}" style="width: 45px;" alt="" /></td>
+              <td class="align-middle text-nowrap">
+                <div class="font-weight-bold">{{ value.name }}</div>
+                <div>{{ value.art_type }} | {{ value.art_style }}</div>
               </td>
               <td class="align-middle text-nowrap">
-                <span ng-if="value.hasFake">Yes</span>
-                <span ng-if="!value.hasFake">No</span>
+                <span ng-if="value.has_fake">Yes</span>
+                <span ng-if="!value.has_fake">No</span>
               </td>
-              <td class="align-middle text-nowrap">{{ value['sell-price'] | currency:'':0 }}</td>
+              <td class="align-middle text-nowrap">{{ value['sell'] }}</td>
+              <td class="align-middle text-nowrap"><a ng-href="{{value.url}}" class="btn btn-sm btn-outline-primary" target="_blank">details...</a></td>
             </tr>
             <tr ng-if="results.length > 0 && artloaded">
               <td colspan="3" class="py-3">{{ results.length }} piece<span ng-if="results.length>1">s</span> of art found</td>
@@ -94,39 +94,6 @@
           </tbody>
         </table>
       </div>
-
-      <!-- <div class="row">
-        <div class="col-12 col-sm-6 col-md-6 col-lg-4 col-xl-3 mb-4" ng-repeat="(key, value) in results = (fossils | toArray | orderBy:'displayname' | filter:{gender:gender})">
-          <div class="card">
-            <img ng-src="{{value.image_uri}}" alt="fossil - {{value.displayname}}" class="card-img-top" />
-            <div class="card-body">
-              <div class="h3 font-weight-bold text-center">{{ value.displayname }}</div>
-              <table class="table table-sm table-borderless">
-                <tr>
-                  <td class="text-right">Birthday</td>
-                  <td>{{ value['birthday-string'] }}</td>
-                </tr>
-                <tr>
-                  <td class="text-right">Gender</td>
-                  <td>{{ value['gender'] }}</td>
-                </tr>
-                <tr>
-                  <td class="text-right">Hobby</td>
-                  <td>{{ value['hobby'] }}</td>
-                </tr>
-                <tr>
-                  <td class="text-right">Personality</td>
-                  <td>{{ value['personality'] }}</td>
-                </tr>
-                <tr>
-                  <td class="text-right">Species</td>
-                  <td>{{ value['species'] }}</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div> -->
     </div>
   </body>
 </html>
