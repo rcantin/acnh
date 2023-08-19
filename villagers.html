@@ -22,45 +22,39 @@
     <div class="container pt-5">
       <div class="h1 py-4 text-center">Villagers</div>
       <div class="table-responsive">
-        <table class="table table-hover table-sm table-md-responsive" style="min-width: 600px;">
+        <table class="table table-hover table-md-responsive" style="min-width: 600px;">
           <tbody>
             <tr class="bg-light">
-              <td>
-                <input type="villagersearch" class="form-control" ng-model="villagername" placeholder="Search..." />
+              <td colspan="2" class="p-1">
+                <input type="search" class="form-control" ng-model="villagername" placeholder="Search..." />
               </td>
-              <td>
+              <td class="p-1">
                 <select name="villagergender" id="villagergender" class="form-control" ng-model="villagergender">
                   <option value="All">All</option>
                   <option ng-repeat="item in genders" ng-value="'{{item}}'">{{item}}</option>
                 </select>
               </td>
-              <td>
-                <select name="villagerhobby" id="villagerhobby" class="form-control" ng-model="villagerhobby">
-                  <option value="All">All</option>
-                  <option ng-repeat="item in hobbies" ng-value="'{{item}}'">{{item}}</option>
-                </select>
-              </td>
-              <td>
+              <td class="p-1">
                 <select name="villagerpersonality" id="villagerpersonality" class="form-control" ng-model="villagerpersonality">
                   <option value="All">All</option>
                   <option ng-repeat="item in personalities" ng-value="'{{item}}'">{{item}}</option>
                 </select>
               </td>
-              <td>
+              <td class="p-1">
                 <select name="villagerspecies" id="villagerspecies" class="form-control" ng-model="villagerspecies">
                   <option value="All">All</option>
                   <option ng-repeat="item in species" ng-value="'{{item}}'">{{item}}</option>
                 </select>
               </td>
-              <td></td>
+              <td class="p-1"></td>
             </tr>
           </tbody>
           <thead>
             <tr>
-              <th>
-                <a href="#" ng-click="orderByField='displayname'; reverseSort = !reverseSort" class="text-nowrap"
+              <th colspan="2">
+                <a href="#" ng-click="orderByField='name'; reverseSort = !reverseSort" class="text-nowrap"
                   >Villager
-                  <span ng-show="orderByField == 'displayname'">
+                  <span ng-show="orderByField == 'name'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
@@ -70,15 +64,6 @@
                 <a href="#" ng-click="orderByField='gender'; reverseSort = !reverseSort" class="text-nowrap"
                   >Gender
                   <span ng-show="orderByField == 'gender'">
-                    <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
-                    <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
-                  </span>
-                </a>
-              </th>
-              <th>
-                <a href="#" ng-click="orderByField='hobby'; reverseSort = !reverseSort" class="text-nowrap"
-                  >Hobby
-                  <span ng-show="orderByField == 'hobby'">
                     <span ng-show="!reverseSort"><i class="fas fa-caret-down fa-lg"></i></span>
                     <span ng-show="reverseSort"><i class="fas fa-caret-up fa-lg"></i></span>
                   </span>
@@ -102,33 +87,29 @@
                   </span>
                 </a>
               </th>
-              <th>Birthday</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
             <tr ng-if="!villagersloaded">
-              <td colspan="5" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Villager data...</td>
+              <td colspan="7" class="py-4 h5 mb-0 font-weight-light"><i class="fas fa-spinner fa-pulse"></i> Getting Villager data...</td>
             </tr>
             <tr ng-if="villagersloaded" ng-repeat="(key, value) in results = (villagers | toArray | search:'':villagername | orderBy:orderByField:reverseSort | trait:'gender':villagergender | trait:'hobby':villagerhobby | trait:'personality':villagerpersonality | trait:'species':villagerspecies)">
-              <td class="align-middle">
-                <div class="d-flex justify-content-start align-items-center">
-                  <div>
-                    <img ng-src="{{value.icon_uri}}" style="height: 45px; width: 45px;" alt="" />
-                  </div>
-                  <div class="ml-2 text-capitalize">{{ value.displayname }}</div>
-                </div>
+              <td class="align-middle"><img ng-src="{{value.image_url}}" style="width: 25px;" alt="" /></td>
+              <td class="align-middle text-nowrap">
+                <div class="h5 mb-0 font-weight-bold">{{ value.name }}</div>
+                <div>Birthday: {{ value.birthday_month }} {{ value.birthday_day }}</div>
               </td>
               <td class="align-middle text-nowrap">{{ value.gender }}</td>
-              <td class="align-middle text-nowrap">{{ value.hobby }}</td>
               <td class="align-middle text-nowrap">{{ value.personality }}</td>
               <td class="align-middle text-nowrap">{{ value.species }}</td>
-              <td class="align-middle text-nowrap">{{ value['birthday-string'] }}</td>
+              <td class="align-middle text-nowrap"><a ng-href="{{value.url}}" class="btn btn-sm btn-outline-primary" target="_blank">details...</a></td>
             </tr>
             <tr ng-if="results.length > 0 && villagersloaded">
-              <td colspan="5" class="py-3">{{ results.length }} Villager<span ng-if="results.length>1">s</span> found</td>
+              <td colspan="7" class="py-3">{{ results.length }} Villager<span ng-if="results.length>1">s</span> found</td>
             </tr>
             <tr ng-if="results.length == 0 && villagersloaded">
-              <td colspan="5" class="py-3">
+              <td colspan="7" class="py-3">
                 <div class="text-danger h5 font-weight-bold"><i class="far fa-frown mr-1"></i> No Villagers found</div>
                 <div>There aren't any Villagers that match your filters &amp; search.</div>
               </td>
