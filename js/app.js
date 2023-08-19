@@ -43,7 +43,7 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   };
 
   $scope.initVillagers = function () {
-    $scope.orderByField = "displayname";
+    $scope.orderByField = "name";
     $scope.reverseSort = false;
     $scope.villagername = "";
     $scope.villagergender = "All";
@@ -54,7 +54,7 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   };
 
   $scope.initFossils = function () {
-    $scope.orderByField = "displayname";
+    $scope.orderByField = "name";
     $scope.reverseSort = false;
     $scope.fossilname = "";
     $scope.fossilgroup = "All";
@@ -62,7 +62,7 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   };
 
   $scope.initArt = function () {
-    $scope.orderByField = "displayname";
+    $scope.orderByField = "name";
     $scope.reverseSort = false;
     $scope.artname = "";
     $scope.getArtData();
@@ -100,20 +100,25 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   $scope.getVillagerData = function () {
     $scope.villagersloaded = false;
     $scope.villagers = [];
-    console.log("Getting villager data from ACNHAPI...");
+    console.log("Getting villager data from Nookipedia...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/villagers",
+      url: "https://api.nookipedia.com/villagers",
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': "46688072-b98a-4b62-8856-b8171007fa96"
+      },
     }).then(
       function successCallback(response) {
         villagerdata = response.data;
-        const items = Object.entries(villagerdata);
-        for (const item of items) {
-          var names = item[1].name;
-          item[1].displayname = names["name-USen"];
-        }
+        // const items = Object.entries(villagerdata);
+        // for (const item of items) {
+        //   var names = item[1].name;
+        //   item[1].displayname = names["name-USen"];
+        // }
         $scope.villagers = villagerdata;
         $scope.buildVillagerDropdowns();
+        console.log(villagerdata);
         $scope.villagersloaded = true;
       },
       function errorCallback(response) {
@@ -125,10 +130,14 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   $scope.getFossilData = function () {
     $scope.fossilsloaded = false;
     $scope.fossils = [];
-    console.log("Getting fossil data from ACNHAPI...");
+    console.log("Getting fossil data from Nookipedia...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/fossils",
+      url: "https://api.nookipedia.com/nh/fossils/individuals",
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': "46688072-b98a-4b62-8856-b8171007fa96"
+      },
     }).then(
       function successCallback(response) {
         fossildata = response.data;
@@ -150,10 +159,14 @@ myApp.controller("MainCtrl", function ($scope, $http, serviceLocalStorage, servi
   $scope.getArtData = function () {
     $scope.artloaded = false;
     $scope.art = [];
-    console.log("Getting art data from ACNHAPI...");
+    console.log("Getting art data from Nookipedia...");
     $http({
       method: "GET",
-      url: "https://acnhapi.com/v1/art",
+      url: "https://api.nookipedia.com/nh/art",
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': "46688072-b98a-4b62-8856-b8171007fa96"
+      },
     }).then(
       function successCallback(response) {
         artdata = response.data;
